@@ -6,14 +6,20 @@ public class EinAusgabe {
 
     private static Scanner scanner = new Scanner(System.in);
 
+    //Erik
+    //Gibt den gegebenen String in der Konsole aus
     public static void textAusgabe(String ausgabeText){
         System.out.println(ausgabeText);
     }
 
+    //Erik
+    //Liest die nächste Zeile aus, die in die Konsole eingegeben wird
     public static String textEingabe(){
         return scanner.nextLine();
     }
 
+    //Erik
+    //Stellt die gegebene Ja/Nein Frage in der Konsole und gibt die Antwort als Boolean zurück
     public static boolean jaNeinFrage(String frageText) {
 
         boolean weiterfragen;
@@ -40,6 +46,8 @@ public class EinAusgabe {
         return returnWert;
     }
 
+    //Erik
+    //Fragt in der Konsole mit der gegebenen Frage nach einem Wert zwischen min und max Wert und gibt den eingegebenen Wert als integer zurück
     public static int intBereichAbfrage(String frageText, int minimalWert, int maximalWert) {
 
         if(minimalWert >= maximalWert){
