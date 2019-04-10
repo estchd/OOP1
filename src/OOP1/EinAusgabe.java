@@ -2,24 +2,30 @@ package OOP1;
 
 import java.util.Scanner;
 
-public class EinAusgabe {
+class EinAusgabe {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    //Erik
-    //Gibt den gegebenen String in der Konsole aus
+    /**Erik
+    *   Gibt den gegebenen String in der Konsole aus
+     */
+    @SuppressWarnings("WeakerAccess")
     public static void textAusgabe(String ausgabeText){
         System.out.println(ausgabeText);
     }
 
-    //Erik
-    //Liest die nächste Zeile aus, die in die Konsole eingegeben wird
+    /**@author Erik
+    *   Liest die nächste Zeile aus, die in die Konsole eingegeben
+    */
+    @SuppressWarnings("WeakerAccess")
     public static String textEingabe(){
         return scanner.nextLine();
     }
 
-    //Erik
-    //Stellt die gegebene Ja/Nein Frage in der Konsole und gibt die Antwort als Boolean zurück
+    /**@author Erik
+    *   Stellt die gegebene Ja/Nein Frage in der Konsole und gibt die Antwort als Boolean zurück
+    */
+    @SuppressWarnings({"unused", "ConstantConditions"})
     public static boolean jaNeinFrage(String frageText) {
 
         boolean weiterfragen;
@@ -46,8 +52,10 @@ public class EinAusgabe {
         return returnWert;
     }
 
-    //Erik
-    //Fragt in der Konsole mit der gegebenen Frage nach einem Wert zwischen min und max Wert und gibt den eingegebenen Wert als integer zurück
+    /**@author Erik
+    *   Fragt in der Konsole mit der gegebenen Frage nach einem Wert zwischen min und max Wert und gibt den eingegebenen Wert als integer zurück
+    */
+    @SuppressWarnings("unused")
     public static int intBereichAbfrage(String frageText, int minimalWert, int maximalWert) {
 
         if(minimalWert >= maximalWert){
@@ -72,7 +80,6 @@ public class EinAusgabe {
             if(returnWert < minimalWert || returnWert > maximalWert) {
                 textAusgabe("Bitte eine Zahl zwischen " + minimalWert + " und " + maximalWert + " eingeben!");
                 weiterfragen = true;
-                continue;
             }
         }
         while(weiterfragen);

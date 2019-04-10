@@ -1,4 +1,8 @@
 package OOP1;
 
-public class Main {
+class Main {
+    @SuppressWarnings("EmptyMethod")
+    public static void main(String[] args){
+
+    }
 }

@@ -1,6 +1,7 @@
 package OOP1;
 
-public class Spieler {
+@SuppressWarnings("unused")
+class Spieler {
 
     private String name;
 
@@ -8,10 +9,12 @@ public class Spieler {
 
     }
 
+    @SuppressWarnings("SameReturnValue")
     public String getName(){
         return "";
     }
 
+    @SuppressWarnings("EmptyMethod")
     public void setName(String name){
 
     }

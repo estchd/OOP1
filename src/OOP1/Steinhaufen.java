@@ -1,6 +1,7 @@
 package OOP1;
 
-public class Steinhaufen {
+@SuppressWarnings("unused")
+class Steinhaufen {
 
     private int anzahlSteine;
 
@@ -8,10 +9,12 @@ public class Steinhaufen {
 
     }
 
+    @SuppressWarnings("SameReturnValue")
     public int getAnzahlSteine(){
         return 0;
     }
 
+    @SuppressWarnings("EmptyMethod")
     public void nimmSteine(int anzahlSteine){
 
     }
