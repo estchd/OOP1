@@ -7,26 +7,32 @@ class EinAusgabe {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**Erik
-    *   Gibt den gegebenen String in der Konsole aus
+     *   Gibt den gegebenen String in der Konsole aus
+     *
+     * @param ausgabeText Der Text der ausgegeben werden soll
      */
-    @SuppressWarnings("WeakerAccess")
-    public static void textAusgabe(String ausgabeText){
+    private static void textAusgabe(String ausgabeText){
         System.out.println(ausgabeText);
     }
 
     /**@author Erik
-    *   Liest die nächste Zeile aus, die in die Konsole eingegeben
+     *   Liest die nächste Zeile aus, die in die Konsole eingegeben
+     *
+     * @return Der in der Konsole eingegebene Text
     */
-    @SuppressWarnings("WeakerAccess")
-    public static String textEingabe(){
+    private static String textEingabe(){
         return scanner.nextLine();
     }
 
     /**@author Erik
-    *   Stellt die gegebene Ja/Nein Frage in der Konsole und gibt die Antwort als Boolean zurück
+     *   Stellt die gegebene Ja/Nein Frage in der Konsole und gibt die Antwort als Boolean zurück
+     *
+     * @param frageText Die Frage, die gestellt werden soll
+     *
+     * @return Die Antwort auf die Ja/Nein Frage als Boolean (True für Ja, False für Nein)
     */
-    @SuppressWarnings({"unused", "ConstantConditions"})
-    public static boolean jaNeinFrage(String frageText) {
+    @SuppressWarnings({"ConstantConditions", "SameParameterValue"})
+    static boolean jaNeinFrage(String frageText) {
 
         boolean weiterfragen;
         boolean returnWert = false;
@@ -53,10 +59,16 @@ class EinAusgabe {
     }
 
     /**@author Erik
-    *   Fragt in der Konsole mit der gegebenen Frage nach einem Wert zwischen min und max Wert und gibt den eingegebenen Wert als integer zurück
+     *   Fragt in der Konsole mit der gegebenen Frage nach einem Wert zwischen min und max Wert und gibt den eingegebenen Wert als integer zurück
+     *
+     * @param frageText Die Frage, die gestellt werden soll
+     * @param minimalWert Der minimale Wert, der als Antwort zugelassen werden soll
+     * @param maximalWert Der maximale Wert, der als Antwort zugelassen werden soll
+     *
+     * @return Die Antwort in Form eines int
     */
-    @SuppressWarnings("unused")
-    public static int intBereichAbfrage(String frageText, int minimalWert, int maximalWert) {
+    @SuppressWarnings("SameParameterValue")
+    static int intBereichAbfrage(String frageText, int minimalWert, int maximalWert) {
 
         if(minimalWert >= maximalWert){
             throw new IllegalArgumentException("MinimalWert kann nicht größer oder gleich sein als der MaximalWert!");
