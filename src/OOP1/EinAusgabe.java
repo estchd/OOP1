@@ -31,6 +31,8 @@ class EinAusgabe {
      *
      * @return Die Antwort auf die Ja/Nein Frage als Boolean (True für Ja, False für Nein)
     */
+
+
     @SuppressWarnings({"ConstantConditions", "SameParameterValue"})
     static boolean jaNeinFrage(String frageText) {
 
@@ -97,5 +99,17 @@ class EinAusgabe {
         while(weiterfragen);
 
         return returnWert;
+    }
+
+    /** @author Josi
+     * Eine einfache Konsolenabfrage, er gibt den Text ausgabe aus, und den eingegeben String zurück.
+     *
+     * @param ausgabe
+     * @return Eingabe als String
+     */
+    public static String einfacheAbfrage(String ausgabe) {
+        textAusgabe(ausgabe);
+        String eingabe = textEingabe();
+        return eingabe;
     }
 }
