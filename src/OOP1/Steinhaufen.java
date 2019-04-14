@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Die Steinhaufen-Klasse gibt die Anzahl der Steine im Steinhaufen aus,
  * sowie bietet sie eine Methode an, 1-3 Steine aus dem Steinhaufen zu entnehmen
  */
-@SuppressWarnings("unused")
+
 class Steinhaufen {
 
     private int anzSteine;
@@ -16,27 +16,47 @@ class Steinhaufen {
         this.anzSteine =  ThreadLocalRandom.current().nextInt(minAnzSteine, maxAnzSteine + 1);
     }
 
-    @SuppressWarnings("SameReturnValue")
     public int getAnzSteine(){
         return anzSteine;
     }
 
-    @SuppressWarnings("EmptyMethod")
     /**
      * Exception in Main behandelt, Exception " bitte anderen Wert eingeben, weil..."
      * wdh der Eingabe
      */
-    public void nimmSteine(int anzahlSteine) throws Exception{
-        if (anzahlSteine >= 1 && anzahlSteine<=3) {
-            if (anzSteine >= anzahlSteine) {
-                this.anzSteine = this.anzSteine - anzahlSteine;
-                System.out.println("Es wurden " + anzahlSteine + " aus dem Steinhaufen genommen.");
-            } else {
-                throw Exception;
-            }
-        } else {
-            throw Exception;
-        }
+    private void nimmSteine(int anzahlSteine) {
+        this.anzSteine = this.anzSteine - anzahlSteine;
+        System.out.println("Es wurden " + anzahlSteine + " aus dem Steinhaufen genommen.");
+        System.out.println("Es sind noch " + anzSteine + " Steine im Haufen.");
+    }
 
+    /**
+     * nimmSteine(String eingabeAnz)
+     * überprüft ob die Eingabe gültig ist. Die Methode entfernt alle
+     * NichtZahlen aus dem String und überführt diesen  in einen Integer.
+     * Desweiteren wird die Größe überprüft, wirft Exception wenn die Eingabe ungültig,
+     * und gibt dessen Grund aus.
+     * @param eingabeAnz
+     * @throws Exception
+     */
+    public void nimmSteine(String eingabeAnz) throws Exception {
+        String eingabe = eingabeAnz.trim().toLowerCase().replaceAll("[\\D]", "");
+        int anzS;
+        try {
+            anzS = Integer.parseInt(eingabe);
+        } catch (NumberFormatException nf) {
+            System.out.println("Eingegebener Wert ist keine Zahl! Bitte erneut eingeben.");
+            throw nf;
+        }
+        if (anzS < 1 || anzS > 3 ) {
+            System.out.println("Die eingegebene Steinanzahl liegt nicht zwischen 1 und 3 und ist somit ungültig.");
+            throw new Exception();
+        }
+        if (anzSteine < anzS) {
+            System.out.println("Die eingegebene Steinanzahl ist größer als die Anzahl, \n" +
+                    "die noch im Steinhaufen sind. Es sind noch: " + anzSteine);
+            throw new Exception();
+        }
+        nimmSteine(anzS);
     }
 }

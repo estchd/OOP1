@@ -31,6 +31,8 @@ class Spiel {
     public void spielStart(){
         //Hier sind die Grenzen des Steinhaufens festgelegt, somit brauche ich hier keine Exception, falls max >= min
         steinhaufen = new Steinhaufen(20,30);
+        System.out.println(getSpielregeln());
+        
 
     }
 
