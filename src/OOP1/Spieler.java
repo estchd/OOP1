@@ -5,14 +5,14 @@ class Spieler {
 
     private String name;
 
-    /**author Erik
+    /**@author Erik
      * Erstellt einen neuen Spieler
      */
     public Spieler(){
 
     }
 
-    /**author Erik
+    /**@author Erik
      * Gibt den Namen des Spielers aus
      *
      * @return Der Name des Spielers
@@ -21,7 +21,7 @@ class Spieler {
         return name;
     }
 
-    /**author Erik
+    /**@author Erik
      * Setzt den Namen des Spielers
      *
      * @param name Der neue Name Spielers

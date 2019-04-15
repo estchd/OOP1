@@ -6,7 +6,7 @@ class EinAusgabe {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    /**Erik
+    /**@author Erik
      *   Gibt den gegebenen String in der Konsole aus
      *
      * @param ausgabeText Der Text der ausgegeben werden soll

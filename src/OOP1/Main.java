@@ -1,7 +1,7 @@
 package OOP1;
 
 class Main {
-    /**autor Erik
+    /**@author Erik
      * Main Funktion des Nimm-Spiels
      *
      * @param args Consolen Argumente
