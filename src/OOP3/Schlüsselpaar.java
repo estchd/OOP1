@@ -11,4 +11,11 @@ public class Schlüsselpaar {
         öffSchlüssel = öffentlSchlüssel;
         privSchlüssel = privatSchlüssel;
     }
+
+    public Schlüssel getPrivate(){
+        return privSchlüssel;
+    }
+    public Schlüssel getPublic(){
+        return öffSchlüssel;
+    }
 }

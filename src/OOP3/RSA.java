@@ -5,6 +5,6 @@ public class RSA {
     private static SignaturPrüfmodul signaturmodul;
 
     public static void start(String modus){
-        
+
     }
 }
