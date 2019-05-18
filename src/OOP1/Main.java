@@ -3,8 +3,9 @@ package OOP1;
 class Main {
     /**@author Erik
      * Main Funktion des Nimm-Spiels
+     * Fragt nach Spieleranzahl,Startet spiel und ermöglicht neues Spiel
      *
-     * @param args Consolen Argumente
+     * @param args Konsolen Argumente
      */
     public static void main(String[] args){
         Spiel spiel;
@@ -15,7 +16,7 @@ class Main {
             spiel = new Spiel(spieleranzahl);
             spiel.spielStart();
 
-            weiterspielen = EinAusgabe.jaNeinFrage("Weiterspielen?");
+            weiterspielen = EinAusgabe.jaNeinFrage("Neues Spiel?");
         }while(weiterspielen);
     }
 }

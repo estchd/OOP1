@@ -34,7 +34,7 @@ class EinAusgabe {
 
 
     @SuppressWarnings({"ConstantConditions", "SameParameterValue"})
-    static boolean jaNeinFrage(String frageText) {
+    public static boolean jaNeinFrage(String frageText) {
 
         boolean weiterfragen;
         boolean returnWert = false;
@@ -70,7 +70,7 @@ class EinAusgabe {
      * @return Die Antwort in Form eines int
     */
     @SuppressWarnings("SameParameterValue")
-    static int intBereichAbfrage(String frageText, int minimalWert, int maximalWert) {
+    public static int intBereichAbfrage(String frageText, int minimalWert, int maximalWert) {
 
         if(minimalWert >= maximalWert){
             throw new IllegalArgumentException("MinimalWert kann nicht größer oder gleich sein als der MaximalWert!");
@@ -104,7 +104,8 @@ class EinAusgabe {
     /** @author Josi
      * Eine einfache Konsolenabfrage, er gibt den Text ausgabe aus, und den eingegeben String zurück.
      *
-     * @param ausgabe
+     * @param ausgabe Die Frage, die gestellt werden soll
+     *
      * @return Eingabe als String
      */
     public static String einfacheAbfrage(String ausgabe) {

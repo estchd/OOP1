@@ -16,15 +16,15 @@ class Steinhaufen {
     /**
      * Erstellt einen neuen Steinhaufen mit einer zufälligen Anzahl von Steinen, die zwischen
      * dem Minimum und Maximum liegt, welches eingegeben wurde.
-     * @param minAnzSteine
-     * @param maxAnzSteine
+     * @param minAnzSteine minimale Anzahl der Steine
+     * @param maxAnzSteine maximale Anzahl der Steine
      */
     public Steinhaufen(int minAnzSteine, int maxAnzSteine){
         this.anzSteine =  ThreadLocalRandom.current().nextInt(minAnzSteine, maxAnzSteine + 1);
     }
 
     /**
-     * Gibt die noch vorhandene Anzahl Steine im Huafen zurück.
+     * Gibt die noch vorhandene Anzahl Steine im Haufen zurück.
      * @return Anzahl Steine im Haufen
      */
     public int getAnzSteine(){
@@ -33,6 +33,8 @@ class Steinhaufen {
 
     /**
      * Private Methode, die die eingebene Anzahl an Steinen von der insgesamten Zahl abzieht.
+     *
+     * @param anzahlSteine Anzahl Steine, die genommen werden sollen
      */
     private void nimmSteine(int anzahlSteine) {
         this.anzSteine = this.anzSteine - anzahlSteine;
@@ -45,7 +47,9 @@ class Steinhaufen {
      * NichtZahlen aus dem String und überführt diesen  in einen Integer.
      * Desweiteren wird die Größe überprüft, wirft Exception wenn die Eingabe ungültig,
      * und gibt dessen Grund aus.
-     * @param eingabeAnz
+     *
+     * @param eingabeAnz String mit der Anzahl der genommenen Steine
+     *
      * @throws Exception
      */
     public void nimmSteine(String eingabeAnz) throws Exception {

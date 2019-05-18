@@ -16,7 +16,7 @@ class Spiel {
 
     /**
      * Erstellt ein neues Spiel mit der eingegebenen Anzahl an Spielern.
-     * @param spielerAnz
+     * @param spielerAnz Anzahl der Spieler
      */
     public Spiel(int spielerAnz){
         this.spieleranzahl = spielerAnz;
@@ -53,7 +53,7 @@ class Spiel {
                     if (anfangsspieler + i <= spieleranzahl) {
                         indexSpieler = anfangsspieler + i;
                     } else {
-                        indexSpieler = i;
+                        indexSpieler = i + anfangsspieler - spieleranzahl;
                     }
                 }
                 System.out.println("Es sind " + steinhaufen.getAnzSteine() + " Steine im Haufen.");
@@ -73,6 +73,11 @@ class Spiel {
                     hatSteine = false;
                     System.out.println(spieler.getName() + " hat den letzten Stein genommen und verliert somit :(.\n" +
                             "Nächstes Mal klappts bestimmt besser.");
+                    spielerList.remove(spieler);
+                    System.out.println("Gewonnen haben:");
+                    for (Spieler gewonnenSpieler: spielerList) {
+                        System.out.println(gewonnenSpieler.getName());
+                    }
                     break;
                 }
                 i++;
