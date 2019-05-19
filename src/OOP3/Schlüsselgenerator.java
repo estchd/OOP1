@@ -1,40 +1,43 @@
 package OOP3;
 
+import OOP3.Primzahl.NaivePrimzahlgenerator;
+import OOP3.Primzahl.Primzahlgenerator;
+import OOP3.Primzahl.SOEPrimzahlgenerator;
+
 import java.math.BigInteger;
+import java.util.Random;
 
 /**
  * @author Josi
  */
 public class Schlüsselgenerator {
-    private static IPrimzahlgenerator primgenerator;
+    private static Primzahlgenerator primgenerator;
+
 
     public Schlüsselgenerator(){
-        //random für eins von beiden
+        //this.primgenerator = new NaivePrimzahlgenerator();
         this.primgenerator = new SOEPrimzahlgenerator();
     }
 
     public static Schlüsselpaar generiereSchlüssel(){
 
-        BigInteger p = BigInteger.valueOf(primgenerator.generierePrinzahl());
-        BigInteger q = BigInteger.valueOf(primgenerator.generierePrinzahl());
+        BigInteger p = BigInteger.valueOf(primgenerator.generierePrimzahl());
+        BigInteger q = p;
+        while (q == p) {
+            q = BigInteger.valueOf(primgenerator.generierePrimzahl());
+        }
         BigInteger g = p.multiply(q);
         BigInteger phiVonG = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
         //finde e, wobei ggt(e, phiG) = 1, gilt bei e prim
-        BigInteger e = BigInteger.valueOf(primgenerator.generierePrinzahl());
-        BigInteger d = new BigInteger("1");
-        while (phiVonG.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phiVonG) < 0)
-        {
-            e.add(BigInteger.ONE);
+        BigInteger e = p;
+        while ( e == p || e == q || e== g) {
+            e = BigInteger.valueOf(primgenerator.generierePrimzahl());
         }
-        d = e.modInverse(phiVonG);
-        if ( (d.multiply(e)).mod(phiVonG) == BigInteger.ONE){
-                System.out.println("d funktioniert und ist vom Wert: " + d);
-        } else {
-            System.out.println("d funktioniert NICHT und ist vom Wert: " + d);
-        }
+        // finde d, wobei (d*e) mod phi(g) = 1
+        BigInteger d = e.modInverse(phiVonG);
 
 
-        //RSA Schlüsselgenerierun
+        //RSA Schlüsselgenerierung
         Schlüssel öffschl = new Schlüssel(e, g);
         Schlüssel pschl = new Schlüssel(d, g);
         Schlüsselpaar schlüsselp = new Schlüsselpaar(pschl, öffschl);

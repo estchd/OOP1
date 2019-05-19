@@ -7,10 +7,20 @@ import java.math.BigInteger;
  */
 public class Schlüssel {
     private BigInteger zahl;
-    private BigInteger generatorzahl;
+
+    public BigInteger getGzahl() {
+        return gzahl;
+    }
+
+    private BigInteger gzahl;
+
+    public BigInteger getZahl() {
+        return zahl;
+    }
 
     public Schlüssel(BigInteger _zahl, BigInteger _generatorzahl){
         this.zahl = _zahl;
-        this.generatorzahl = _generatorzahl;
+        this.gzahl = _generatorzahl;
     }
+
 }
