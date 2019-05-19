@@ -10,19 +10,19 @@ import java.math.BigInteger;
  */
 public class SignaturPrüfmodul {
 
-    public static BigInteger generiereSignatur(String dateipfad, Schlüssel schlüssel){
+    public static BigInteger generiereSignatur(String dateipfad, Schlüssel privschlüssel){
         Prüfsummengenerator prüfsummegen = new QSPrüfsummengenerator();
         BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));
-        BigInteger g = schlüssel.getGzahl();
-        BigInteger d = schlüssel.getZahl();
+        BigInteger g = privschlüssel.getGzahl();
+        BigInteger d = privschlüssel.getZahl();
         BigInteger signat = prüfsumme.modPow(d, g);
         return signat;
     }
-    public static boolean prüfeSignatur(String dateipfad, Schlüssel schlüssel, BigInteger signatur){
+    public static boolean prüfeSignatur(String dateipfad, Schlüssel pubschlüssel, BigInteger signatur){
         Prüfsummengenerator prüfsummegen = new QSPrüfsummengenerator();
         BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));
-        BigInteger g = schlüssel.getGzahl();
-        BigInteger e = schlüssel.getZahl();
+        BigInteger g = pubschlüssel.getGzahl();
+        BigInteger e = pubschlüssel.getZahl();
         if (prüfsumme  == signatur.modPow(e, g)) {
             return true;
         }

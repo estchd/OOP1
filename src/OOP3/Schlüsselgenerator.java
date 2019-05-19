@@ -5,8 +5,6 @@ import OOP3.Primzahl.Primzahlgenerator;
 import OOP3.Primzahl.SOEPrimzahlgenerator;
 
 import java.math.BigInteger;
-import java.util.Random;
-
 /**
  * @author Josi
  */
