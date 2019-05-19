@@ -23,4 +23,10 @@ public class Schlüssel {
         this.gzahl = _generatorzahl;
     }
 
+    @Override
+    public String toString()
+    {
+        return "( " + getZahl().toString() + " | " + getGzahl().toString() + " )";
+    }
+
 }

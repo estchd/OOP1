@@ -1,15 +1,13 @@
 package OOP3;
 
-import OOP3.Primzahl.NaivePrimzahlgenerator;
-import OOP3.Primzahl.Primzahlgenerator;
-import OOP3.Primzahl.SOEPrimzahlgenerator;
+import OOP3.Primzahl.*;
 
 import java.math.BigInteger;
 /**
  * @author Josi
  */
 public class Schlüsselgenerator {
-    private static Primzahlgenerator primgenerator;
+    private Primzahlgenerator primgenerator;
 
 
     public Schlüsselgenerator(){
@@ -17,18 +15,18 @@ public class Schlüsselgenerator {
         this.primgenerator = new SOEPrimzahlgenerator();
     }
 
-    public static Schlüsselpaar generiereSchlüssel(){
+    public Schlüsselpaar generiereSchlüssel(){
 
         BigInteger p = BigInteger.valueOf(primgenerator.generierePrimzahl());
         BigInteger q = p;
-        while (q == p) {
+        while (q.equals(p)) {
             q = BigInteger.valueOf(primgenerator.generierePrimzahl());
         }
         BigInteger g = p.multiply(q);
         BigInteger phiVonG = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
         //finde e, wobei ggt(e, phiG) = 1, gilt bei e prim
         BigInteger e = p;
-        while ( e == p || e == q || e== g) {
+        while ( e.equals(p) || e.equals(q) || e.equals(g)) {
             e = BigInteger.valueOf(primgenerator.generierePrimzahl());
         }
         // finde d, wobei (d*e) mod phi(g) = 1
@@ -36,9 +34,6 @@ public class Schlüsselgenerator {
 
 
         //RSA Schlüsselgenerierung
-        Schlüssel öffschl = new Schlüssel(e, g);
-        Schlüssel pschl = new Schlüssel(d, g);
-        Schlüsselpaar schlüsselp = new Schlüsselpaar(pschl, öffschl);
-        return schlüsselp;
+        return new Schlüsselpaar(new Schlüssel(d, g), new Schlüssel(e, g));
     }
 }

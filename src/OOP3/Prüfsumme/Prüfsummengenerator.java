@@ -22,7 +22,7 @@ public abstract class Prüfsummengenerator implements IPrüfsummengenerator
      * @param pfad Der Pfad zur Textdatei
      * @return Die Prüfsumme des Texts
      */
-    public long generierePrüfsumme(String pfad)
+    public long generierePrüfsumme(String pfad) throws IllegalArgumentException
     {
         String text;
         try {

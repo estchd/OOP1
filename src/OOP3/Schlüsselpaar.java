@@ -4,8 +4,8 @@ package OOP3;
  * @author Josi
  */
 public class Schlüsselpaar {
-    private static Schlüssel öffSchlüssel;
-    private static Schlüssel privSchlüssel;
+    private Schlüssel öffSchlüssel;
+    private Schlüssel privSchlüssel;
 
     public Schlüsselpaar(Schlüssel privatSchlüssel, Schlüssel öffentlSchlüssel){
         öffSchlüssel = öffentlSchlüssel;
@@ -17,5 +17,11 @@ public class Schlüsselpaar {
     }
     public Schlüssel getPublic(){
         return öffSchlüssel;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "( " + öffSchlüssel.toString() + " | " + privSchlüssel.toString() + " )";
     }
 }

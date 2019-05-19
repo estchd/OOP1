@@ -1,5 +1,8 @@
 package OOP3;
 
+import OOP1.EinAusgabe;
+import OOP3.Prüfsumme.FCPrüfsummengenerator;
+import OOP3.Prüfsumme.IPrüfsummengenerator;
 import OOP3.Prüfsumme.Prüfsummengenerator;
 import OOP3.Prüfsumme.QSPrüfsummengenerator;
 
@@ -10,23 +13,23 @@ import java.math.BigInteger;
  */
 public class SignaturPrüfmodul {
 
-    public static BigInteger generiereSignatur(String dateipfad, Schlüssel privschlüssel){
-        Prüfsummengenerator prüfsummegen = new QSPrüfsummengenerator();
-        BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));
-        BigInteger g = privschlüssel.getGzahl();
-        BigInteger d = privschlüssel.getZahl();
-        BigInteger signat = prüfsumme.modPow(d, g);
-        return signat;
+    private IPrüfsummengenerator prüfsummegen;
+
+    public SignaturPrüfmodul()
+    {
+        prüfsummegen = new FCPrüfsummengenerator();
     }
-    public static boolean prüfeSignatur(String dateipfad, Schlüssel pubschlüssel, BigInteger signatur){
-        Prüfsummengenerator prüfsummegen = new QSPrüfsummengenerator();
+
+    public BigInteger generiereSignatur(String dateipfad, Schlüssel privschlüssel) throws IllegalArgumentException
+    {
         BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));
-        BigInteger g = pubschlüssel.getGzahl();
-        BigInteger e = pubschlüssel.getZahl();
-        if (prüfsumme  == signatur.modPow(e, g)) {
-            return true;
-        }
-        return false;
+        return prüfsumme.modPow(privschlüssel.getZahl(), privschlüssel.getGzahl());
+    }
+    public boolean prüfeSignatur(String dateipfad, Schlüssel pubschlüssel, BigInteger signatur) throws IllegalArgumentException
+    {
+        BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));
+        BigInteger calcPrüfsumme = signatur.modPow(pubschlüssel.getZahl(), pubschlüssel.getGzahl());
+        return prüfsumme.equals(calcPrüfsumme);
     }
 
 }

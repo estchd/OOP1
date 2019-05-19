@@ -1,5 +1,8 @@
 package OOP1;
 
+import OOP3.Schlüssel;
+import OOP3.Schlüsselpaar;
+
 import java.math.BigInteger;
 import java.util.Scanner;
 
@@ -12,7 +15,7 @@ public class EinAusgabe {
      *
      * @param ausgabeText Der Text der ausgegeben werden soll
      */
-    private static void textAusgabe(String ausgabeText){
+    public static void textAusgabe(String ausgabeText){
         System.out.println(ausgabeText);
     }
 
@@ -21,7 +24,7 @@ public class EinAusgabe {
      *
      * @return Der in der Konsole eingegebene Text
     */
-    private static String textEingabe(){
+    public static String textEingabe(){
         return scanner.nextLine();
     }
 
@@ -125,11 +128,11 @@ public class EinAusgabe {
     public static BigInteger bigIntAbfrage(String frage)
     {
         textAusgabe(frage);
-        String eingabe = textEingabe().trim().toLowerCase();
         BigInteger zahl = BigInteger.ZERO;
         boolean weiterfragen = true;
         while (weiterfragen) {
             try {
+                String eingabe = textEingabe().trim().toLowerCase();
                 zahl = new BigInteger(eingabe);
                 weiterfragen = false;
                 if (zahl.compareTo(BigInteger.ZERO) < 0) {
@@ -146,5 +149,48 @@ public class EinAusgabe {
         }
 
         return zahl;
+    }
+
+    public static int auswahlAbfrage(String frage, String[] möglichkeiten)
+    {
+        boolean hasAnswer = false;
+
+        do{
+            textAusgabe(frage);
+            textAusgabe("Möglichkeiten:");
+            for(int i = 0; i < möglichkeiten.length; i++)
+            {
+                textAusgabe("   " + möglichkeiten[i]);
+            }
+            String eingabe = textEingabe();
+
+            for(int i = 0; i < möglichkeiten.length; i++)
+            {
+                if(eingabe.compareToIgnoreCase(möglichkeiten[i]) == 0)
+                {
+                    return i;
+                }
+            }
+            textAusgabe("Fehlerhafte Eingabe! Bitte eine der Möglichkeiten Angeben!");
+        }
+        while (true);
+    }
+
+    public static Schlüssel schlüsselAbfrage(String frage)
+    {
+        textAusgabe(frage);
+        BigInteger zahl = bigIntAbfrage("Bitte Zahl angeben:");
+        BigInteger gzahl = bigIntAbfrage("Bitte gZahl angeben:");
+
+        return new Schlüssel(zahl,gzahl);
+    }
+
+    public static Schlüsselpaar schlüsselpaarAbfage(String frage)
+    {
+        textAusgabe(frage);
+        Schlüssel pubKey = schlüsselAbfrage("Bitte Öffentlichen Schlüssel angeben:");
+        Schlüssel privKey = schlüsselAbfrage("Bitte Privaten Schlüssel angeben:");
+
+        return new Schlüsselpaar(privKey,pubKey);
     }
 }

@@ -15,5 +15,5 @@ public interface IPrüfsummengenerator
      * @param pfad Der Pfad zur Textdatei
      * @return Die Prüfsumme des Texts
      */
-    long generierePrüfsumme(String pfad);
+    long generierePrüfsumme(String pfad) throws IllegalArgumentException;
 }
