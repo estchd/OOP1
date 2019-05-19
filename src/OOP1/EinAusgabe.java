@@ -1,8 +1,9 @@
 package OOP1;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
-class EinAusgabe {
+public class EinAusgabe {
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -112,5 +113,38 @@ class EinAusgabe {
         textAusgabe(ausgabe);
         String eingabe = textEingabe();
         return eingabe;
+    }
+
+    /**
+     * @author Josi
+     *
+     * Konsolenabfrage nach einer Zahl.
+     * @param frage : String der auf der Konsole ausgegeben werden soll.
+     * @return zahl : abgefragte Zahl als BigInteger.
+     */
+    public static BigInteger bigIntAbfrage(String frage)
+    {
+        textAusgabe(frage);
+        String eingabe = textEingabe().trim().toLowerCase();
+        BigInteger zahl = BigInteger.ZERO;
+        boolean weiterfragen = true;
+        while (weiterfragen) {
+            try {
+                zahl = new BigInteger(eingabe);
+                weiterfragen = false;
+                if (zahl.compareTo(BigInteger.ZERO) < 0) {
+                    System.out.println("Eingegebener Wert ist kleiner 0! Bitte erneut eingeben.");
+                    weiterfragen = true;
+                }
+            } catch (NumberFormatException nf) {
+                System.out.println("Eingegebener Wert ist keine Zahl! Bitte erneut eingeben.");
+                weiterfragen = true;
+            } catch (Exception e) {
+                System.out.println("Eingegebener Wert ist ungültig! Bitte erneut eingeben.");
+                weiterfragen = true;
+            }
+        }
+
+        return zahl;
     }
 }
