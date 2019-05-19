@@ -135,7 +135,7 @@ public class SOEPrimzahlgenerator extends Primzahlgenerator
             }
 
             //Check if we found a prime
-            for(int i = size; i > 0; i--)
+            for(int i = size-1; i > 0; i--)
             {
                 if(batch[i])
                 {
