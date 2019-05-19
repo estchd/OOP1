@@ -43,14 +43,14 @@ public abstract class Primzahlgenerator implements IPrimzahlgenerator
      */
     public boolean testePrimzahl(int prim)
     {
-        boolean isPrime = true;
         for(int p = 2; p*p <= prim; p++)
         {
             if(prim % p == 0)
             {
-                isPrime = false;
+                System.out.println("Divisible by: " + p);
+                return false;
             }
         }
-        return isPrime;
+        return true;
     }
 }

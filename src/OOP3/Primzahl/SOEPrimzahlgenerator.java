@@ -21,7 +21,7 @@ public class SOEPrimzahlgenerator extends Primzahlgenerator
     public int generierePrimzahl()
     {
         int primeCeil = getRandomPrimeCeiling();
-        int divideCeil = (int)(Math.floor(Math.sqrt(primeCeil)));
+        int divideCeil = (int)(Math.ceil(Math.sqrt(primeCeil)));
 
         Vector<Integer> primes = new Vector<>();
 
@@ -72,7 +72,7 @@ public class SOEPrimzahlgenerator extends Primzahlgenerator
                     {
                         int prim = batchFloor + n;
 
-                        for(int m = n; m < size; m++)
+                        for(int m = n+1; m < size; m++)
                         {
                             if(batch[m] && (batchFloor + m) % prim == 0)
                             {
@@ -119,7 +119,7 @@ public class SOEPrimzahlgenerator extends Primzahlgenerator
             //Initialize Batch with all true
             for(int i = 0; i < size; i++)
             {
-                batch[i] = false;
+                batch[i] = true;
             }
 
             //Scratch Multiples of known primes in batch
@@ -140,7 +140,7 @@ public class SOEPrimzahlgenerator extends Primzahlgenerator
                 if(batch[i])
                 {
                     gotPrime = true;
-                    prime = batchFloor + 1;
+                    prime = batchFloor + i;
                 }
             }
 
@@ -156,7 +156,7 @@ public class SOEPrimzahlgenerator extends Primzahlgenerator
         while(!gotPrime);
 
 
-        return 0;
+        return prime;
     }
 
 }
