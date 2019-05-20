@@ -41,6 +41,6 @@ public class Schlüsselpaar {
     @Override
     public String toString()
     {
-        return "( " + öffSchlüssel.toString() + " | " + privSchlüssel.toString() + " )";
+        return " (öffentl. | privat) : ( " + öffSchlüssel.toString() + " | " + privSchlüssel.toString() + " )";
     }
 }
