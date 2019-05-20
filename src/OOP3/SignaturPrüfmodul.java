@@ -15,16 +15,40 @@ public class SignaturPrüfmodul {
 
     private IPrüfsummengenerator prüfsummegen;
 
+    /**
+     * @author Josi
+     * Konstruktor
+     */
     public SignaturPrüfmodul()
     {
         prüfsummegen = new FCPrüfsummengenerator();
     }
 
+    /**
+     * @author Josi
+     *
+     * Generiert die Signatur anhand der Prüfsumme der Datei und gibt diese als BigInteger zurück.
+     * @param dateipfad als String
+     * @param privschlüssel
+     * @return Signatur als BigInteger
+     * @throws IllegalArgumentException
+     */
     public BigInteger generiereSignatur(String dateipfad, Schlüssel privschlüssel) throws IllegalArgumentException
     {
         BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));
         return prüfsumme.modPow(privschlüssel.getZahl(), privschlüssel.getGzahl());
     }
+
+    /**
+     * @author Josi
+     *
+     * Überprüft die eingebene Signatur der Datei und gibt true/false zurück.
+     * @param dateipfad als String
+     * @param pubschlüssel
+     * @param signatur als BigInteger
+     * @return Prüfergebnis als boolean
+     * @throws IllegalArgumentException
+     */
     public boolean prüfeSignatur(String dateipfad, Schlüssel pubschlüssel, BigInteger signatur) throws IllegalArgumentException
     {
         BigInteger prüfsumme = BigInteger.valueOf(prüfsummegen.generierePrüfsumme(dateipfad));

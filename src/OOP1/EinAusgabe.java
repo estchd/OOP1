@@ -151,6 +151,14 @@ public class EinAusgabe {
         return zahl;
     }
 
+    /**
+     * @author Erik
+     *
+     * Eine Abfrage von einer Liste von Möglichkeiten, bei der eine durch einen Integer ausgewählt werden muss.
+     * @param frage Konsolenausgabe als String
+     * @param möglichkeiten eine Liste an Auswahlmöglichkeiten
+     * @return Konsoleneingabe des Indexes der Auswahl als Integer
+     */
     public static int auswahlAbfrage(String frage, String[] möglichkeiten)
     {
         boolean hasAnswer = false;
@@ -176,6 +184,13 @@ public class EinAusgabe {
         while (true);
     }
 
+    /**
+     * @author Erik
+     *
+     * Abfrage nach einem Schlüssel.
+     * @param frage Konsolenausgabe als String
+     * @return Konsoleneingabe als Schlüssel
+     */
     public static Schlüssel schlüsselAbfrage(String frage)
     {
         textAusgabe(frage);
@@ -185,6 +200,13 @@ public class EinAusgabe {
         return new Schlüssel(zahl,gzahl);
     }
 
+    /**
+     * @author Josi
+     *
+     * Abfrage nach einem Schlüsselpaar
+     * @param frage Konsolenausgabe als String
+     * @return Konsoleneingabe als Schlüsselpaar
+     */
     public static Schlüsselpaar schlüsselpaarAbfage(String frage)
     {
         textAusgabe(frage);

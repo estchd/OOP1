@@ -12,6 +12,11 @@ public class RSA {
         this.signaturmodul = new SignaturPrüfmodul();
     }
 
+    /**
+     * @author Josi und Erik
+     *
+     * Die Methode fragt den auszuführenden Modus ab, und bildet den Rahmen diesen durchzuführen.
+     */
     public void start(){
 
         int modus = EinAusgabe.auswahlAbfrage("Welcher Modus?",new String[]{"Schlüssel","Signieren","Prüfen","Alles"});
@@ -41,12 +46,23 @@ public class RSA {
         System.out.println("Programm beendet.");
     }
 
+    /**
+     * @author Erik
+     *
+     * Generiert ein Schlüsselpaar und gibt diese auf der Konsole aus.
+     */
     private void schlüsselGenerieren()
     {
         Schlüsselpaar keys = schlüsselgenerator.generiereSchlüssel();
         EinAusgabe.textAusgabe("Generierte Schlüssel : " + keys.toString());
     }
 
+    /**
+     * @author  Josi
+     *
+     * Generiert eine Signatur anhand das eingegebenen privaten Schlüssels und gibt diese Signatur
+     * auf der Konsole aus.
+     */
     private void signaturGenerieren()
     {
         Schlüssel privkey = EinAusgabe.schlüsselAbfrage("Bitte Privaten Schlüssel eingeben:");
@@ -76,6 +92,11 @@ public class RSA {
         EinAusgabe.textAusgabe("Die Signatur der Datei lautet: " + signatur);
     }
 
+    /**
+     * @author Josi und Erik
+     *
+     * Überprüft die eingegebene Signatur der angebenen Datei und gibt die Korrektheit auf der Konsole aus.
+     */
     private void signaturPrüfen()
     {
         Schlüssel pubkey = EinAusgabe.schlüsselAbfrage("Bitte Öffentlichen Schlüssel eingeben:");

@@ -9,12 +9,21 @@ import java.math.BigInteger;
 public class Schlüsselgenerator {
     private Primzahlgenerator primgenerator;
 
-
+    /**
+     * @author Josi
+     *
+     * Konstruktor
+     */
     public Schlüsselgenerator(){
         //this.primgenerator = new NaivePrimzahlgenerator();
         this.primgenerator = new SOEPrimzahlgenerator();
     }
 
+    /**
+     * @author Josi
+     * Generiert aus zufälligen Primzahlen öffentlichen und privaten Schlüssel anhand des RSA Algorithmus.
+     * @return Schlüsselpaar
+     */
     public Schlüsselpaar generiereSchlüssel(){
 
         BigInteger p = BigInteger.valueOf(primgenerator.generierePrimzahl());
