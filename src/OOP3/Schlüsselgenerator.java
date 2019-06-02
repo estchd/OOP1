@@ -7,7 +7,7 @@ import java.math.BigInteger;
  * @author Josi
  */
 public class Schlüsselgenerator {
-    private Primzahlgenerator primgenerator;
+    private IPrimzahlgenerator primgenerator;
 
     /**
      * @author Josi

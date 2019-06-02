@@ -40,9 +40,9 @@ public class SignaturPrüfmodul {
     }
 
     /**
-     * @author Josi
-     *
      * Überprüft die eingebene Signatur der Datei und gibt true/false zurück.
+     *
+     * @author Josi
      * @param dateipfad als String
      * @param pubschlüssel
      * @param signatur als BigInteger
