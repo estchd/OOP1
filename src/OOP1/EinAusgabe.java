@@ -118,6 +118,52 @@ public class EinAusgabe {
         return eingabe;
     }
 
+    public static int intAbfrage(String frage)
+    {
+        textAusgabe(frage);
+        int res = 0;
+
+        boolean weiterfragen = true;
+        do
+        {
+
+            String eingabe = textEingabe();
+            try
+            {
+                res = Integer.parseInt(eingabe);
+            }
+            catch (NumberFormatException ex)
+            {
+                textAusgabe("Bitte eine Zahl angeben!");
+                continue;
+            }
+            weiterfragen = false;
+        }
+        while(weiterfragen);
+
+        return res;
+    }
+
+    public static int positiveIntAbfrage(String frage)
+    {
+        int res = 0;
+
+        boolean weiterfragen = true;
+        do
+        {
+            res = intAbfrage(frage);
+            if(res < 0)
+            {
+                textAusgabe("Bitte eine Positive Zahl angeben!");
+                continue;
+            }
+            weiterfragen = false;
+        }
+        while(weiterfragen);
+
+        return res;
+    }
+
     /**
      * @author Josi
      *

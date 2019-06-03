@@ -2,12 +2,26 @@ package OOP4;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Kettenqualität implements Comparable<Kettenqualität>{
 
     private int abstand;
+
+    public int getAbstand()
+    {
+        return abstand;
+    }
+
     private int häufigkeit;
+
+    public int getHäufigkeit()
+    {
+        return häufigkeit;
+    }
 
     /**
      * Bestimmt die Quallität der Kette und gibt diese zurück.
@@ -15,66 +29,35 @@ public class Kettenqualität implements Comparable<Kettenqualität>{
      * @param kette Liste mit Farben
      * @return
      */
-    public Kettenqualität berechneQualität(List<EFarben> kette)
+    public static Kettenqualität berechneQualität(List<EFarben> kette)
     {
         //TODO: Prüfen ob nicht doch größtmöglicher Abstand gefragt
-        int firstR = 0;
-        int firstB = 0;
-        int firstG = 0;
-        int firstW = 0;
-        int firstS = 0;
+        Kettenqualität kettenqualität = new Kettenqualität();
+        kettenqualität.abstand = kette.size();
+        kettenqualität.häufigkeit = 0;
 
-        for (int i = 0; i<kette.size(); i++ ) {
-            EFarben farb = kette.get(i);
-            if (farb == EFarben.Rot) {
-                if ((i - firstR) == abstand ) {
-                    abstand++;
-                    häufigkeit++;
-                } else if ((i - firstR) < abstand) {
-                    abstand = (i - firstR);
-                    häufigkeit = 1;
-                }
-                firstR = i;
-            } else if (farb == EFarben.Blau) {
-                if ((i - firstB) == abstand ) {
-                    abstand++;
-                    häufigkeit++;
-                } else if ((i - firstB) < abstand) {
-                    abstand = (i - firstB);
-                    häufigkeit = 1;
-                }
-                firstB = i;
-            }else if (farb == EFarben.Gelb) {
-                if ((i - firstG) == abstand ) {
-                abstand++;
-                häufigkeit++;
-            } else if ((i - firstG) < abstand) {
-                abstand = (i - firstG);
-                häufigkeit = 1;
+        Map<EFarben, Integer> last = new EnumMap<>(EFarben.class);
+
+        for (int i = 0; i < kette.size(); i++ )
+        {
+
+            EFarben farbe = kette.get(i);
+            if(!last.containsKey(farbe))
+            {
+                last.put(farbe,i);
+                continue;
             }
-                firstG = i;
-            }else if (farb == EFarben.Weiß) {
-                if ((i - firstW) == abstand ) {
-                abstand++;
-                häufigkeit++;
-            } else if ((i - firstW) < abstand) {
-                abstand = (i - firstW);
-                häufigkeit = 1;
+
+            int farbAbstand = i - last.get(farbe);
+            if (farbAbstand == kettenqualität.abstand) {
+                kettenqualität.häufigkeit++;
+            } else if (farbAbstand < kettenqualität.abstand) {
+                kettenqualität.abstand = farbAbstand;
+                kettenqualität.häufigkeit = 1;
             }
-                firstW = i;
-            }else if (farb == EFarben.Schwarz) {
-                if ((i - firstS) == abstand ) {
-                    abstand++;
-                    häufigkeit++;
-                } else if ((i - firstS) < abstand) {
-                    abstand = (i - firstS);
-                    häufigkeit = 1;
-                }
-                firstS = i;
-            }
+            last.replace(farbe, i);
         }
-
-        return this;
+        return kettenqualität;
     }
 
     /**
