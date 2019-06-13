@@ -2,9 +2,10 @@ package OOP1;
 
 import OOP3.Schlüssel;
 import OOP3.Schlüsselpaar;
+import OOP4.Farbe;
 
 import java.math.BigInteger;
-import java.util.Scanner;
+import java.util.*;
 
 public class EinAusgabe {
 
@@ -260,5 +261,49 @@ public class EinAusgabe {
         Schlüssel privKey = schlüsselAbfrage("Bitte Privaten Schlüssel angeben:");
 
         return new Schlüsselpaar(privKey,pubKey);
+    }
+
+    /**
+     * Abfrage nach Farbennamen
+     *
+     * @author Erik
+     * @param frage Konsolenausgabe
+     * @return Farbennamen als Farbe (null wenn VollerName leerer String)
+     */
+    public static Farbe FarbeAbfrage(String frage)
+    {
+        textAusgabe(frage);
+        String fullName = einfacheAbfrage("Langer Name?");
+        if(fullName.equals("")){
+            return null;
+        }
+        String shortName = einfacheAbfrage("Kurzer Name?");
+        int anzahl = positiveIntAbfrage("Anzahl?");
+        return new Farbe(fullName,shortName,anzahl);
+    }
+
+    public static List<Farbe> FarbenAbfrage(String frage)
+    {
+        textAusgabe(frage);
+        List<Farbe> res = new ArrayList<>();
+        boolean weiterAbfragen = true;
+        do{
+            Farbe farbe = FarbeAbfrage("Bitte die nächste Farbe eingeben! (Leerer Voller Name für keine Weitere Farbe)");
+            if(farbe == null)
+            {
+                textAusgabe("Keine Weitere Farbe!");
+                weiterAbfragen = false;
+                continue;
+            }
+            if(res.contains(farbe)){
+                textAusgabe("Eine Farbe mit dem Namen " + farbe.GetFullName() + " wurde schon eingegeben!");
+                continue;
+            }
+
+            res.add(farbe);
+        }
+        while(weiterAbfragen);
+
+        return res;
     }
 }

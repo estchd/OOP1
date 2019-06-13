@@ -2,22 +2,35 @@ package OOP4;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+/**
+ * Klasse zur bestimmung der Qualität von Wimpelketten
+ *
+ * @author Josi
+ */
 public class Kettenqualität implements Comparable<Kettenqualität>{
 
     private int abstand;
+    private int häufigkeit;
 
+    /**
+     * Gibt den Minimalen Abstand der Wimpel in der Kette zurück
+     *
+     * @author Josi
+     * @return Der Minimale Abstand der Wimpel in der Kette
+     */
     public int getAbstand()
     {
         return abstand;
     }
 
-    private int häufigkeit;
-
+    /**
+     * Gibt die Häufigkeit des Minimalen Abstands in der Kette zurück
+     *
+     * @author Josi
+     * @return Die Häufigkeit des Minimalen Abstand in der Kette
+     */
     public int getHäufigkeit()
     {
         return häufigkeit;
@@ -29,33 +42,37 @@ public class Kettenqualität implements Comparable<Kettenqualität>{
      * @param kette Liste mit Farben
      * @return
      */
-    public static Kettenqualität berechneQualität(List<EFarben> kette)
+    public static Kettenqualität berechneQualität(List<Farbe> kette)
     {
-        //TODO: Prüfen ob nicht doch größtmöglicher Abstand gefragt
         Kettenqualität kettenqualität = new Kettenqualität();
         kettenqualität.abstand = kette.size();
         kettenqualität.häufigkeit = 0;
 
-        Map<EFarben, Integer> last = new EnumMap<>(EFarben.class);
+        Integer[] last = new Integer[kette.size()];
+
+        for(int i = 0; i < last.length ; i++)
+        {
+            last[i] = -1;
+        }
 
         for (int i = 0; i < kette.size(); i++ )
         {
 
-            EFarben farbe = kette.get(i);
-            if(!last.containsKey(farbe))
+            Farbe farbe = kette.get(i);
+            if(last[kette.indexOf(farbe)] == -1)
             {
-                last.put(farbe,i);
+                last[kette.indexOf(farbe)] = i;
                 continue;
             }
 
-            int farbAbstand = i - last.get(farbe);
+            int farbAbstand = i - last[kette.indexOf(farbe)];
             if (farbAbstand == kettenqualität.abstand) {
                 kettenqualität.häufigkeit++;
             } else if (farbAbstand < kettenqualität.abstand) {
                 kettenqualität.abstand = farbAbstand;
                 kettenqualität.häufigkeit = 1;
             }
-            last.replace(farbe, i);
+            last[kette.indexOf(farbe)] = i;
         }
         return kettenqualität;
     }

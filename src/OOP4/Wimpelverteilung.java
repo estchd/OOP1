@@ -5,23 +5,27 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
+/**
+ * Klasse für das Verteilen von Wimpeln auf Ketten
+ *
+ * @author Erik
+ */
 public class Wimpelverteilung
 {
+    /**
+     * Führt eine Wimpelverteilung durch
+     * Fragt erst die verfügbaren Wimpel ab und berechnet dann die besten Wimpelketten
+     *
+     * @author Erik
+     */
     public void start()
     {
-        Map<EFarben,Integer> wimpel = new HashMap<>();
-
-        EinAusgabe.textAusgabe("Anzahl der Wimpel angeben:");
-        for (EFarben farbe : EFarben.values())
-        {
-            int anzahl = EinAusgabe.positiveIntAbfrage("Wimpel mit der Farbe " + farbe.toString() + ":");
-            wimpel.put(farbe, anzahl);
-        }
+        List<Farbe> farben = EinAusgabe.FarbenAbfrage("Welche Farben gibt es?");
 
         int anzahlWimpel = 0;
 
-        for (Integer anzahl : wimpel.values()) {
-            anzahlWimpel += anzahl;
+        for (Farbe farbe : farben) {
+            anzahlWimpel += farbe.GetAnzahl();
         }
 
         if(anzahlWimpel == 0)
@@ -34,11 +38,11 @@ public class Wimpelverteilung
 
         boolean gotKette = false;
         int minQualität = anzahlWimpel;
-        List<List<EFarben>> ketten;
+        List<List<Farbe>> ketten;
 
         do {
             minQualität--;
-            ketten = wimpelketten.generiereWimpelketten(wimpel, new ArrayList<>(), minQualität);
+            ketten = wimpelketten.generiereWimpelketten(farben, new ArrayList<>(), minQualität);
 
             if(ketten.size() > 0)
             {
@@ -47,9 +51,9 @@ public class Wimpelverteilung
         }
         while (!gotKette);
 
-        ketten.sort(new Comparator<List<EFarben>>() {
+        ketten.sort(new Comparator<List<Farbe>>() {
             @Override
-            public int compare(List<EFarben> o1, List<EFarben> o2) {
+            public int compare(List<Farbe> o1, List<Farbe> o2) {
                 Kettenqualität qual1 = Kettenqualität.berechneQualität(o1);
                 Kettenqualität qual2 = Kettenqualität.berechneQualität(o2);
 
@@ -57,10 +61,10 @@ public class Wimpelverteilung
             }
         });
 
-        List<List<EFarben>> maxKetten = new ArrayList<>();
+        List<List<Farbe>> maxKetten = new ArrayList<>();
         int maxHäufigkeit = 0;
 
-        for (List<EFarben> kette : ketten)
+        for (List<Farbe> kette : ketten)
         {
             Kettenqualität qual = Kettenqualität.berechneQualität(kette);
 
@@ -76,12 +80,12 @@ public class Wimpelverteilung
         Kettenqualität maxqual = Kettenqualität.berechneQualität(maxKetten.get(0));
         EinAusgabe.textAusgabe("Die Maximale Qualität ist: (" + maxqual.getAbstand() + "|" + maxqual.getHäufigkeit() + ")");
         EinAusgabe.textAusgabe("Die Maximalen Wimpelketten sind:");
-        for (List<EFarben> kette: maxKetten)
+        for (List<Farbe> kette: maxKetten)
         {
             String ketteString = "(";
-            for (EFarben wimp : kette)
+            for (Farbe wimp : kette)
             {
-                ketteString += wimp.toString() + ",";
+                ketteString += wimp.GetShortName() + ",";
             }
             ketteString += ")";
             EinAusgabe.textAusgabe(ketteString);

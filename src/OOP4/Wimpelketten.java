@@ -4,16 +4,30 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
+/**
+ * Klasse zur Generierung von Wimpelketten
+ *
+ * @author Erik
+ */
 public class Wimpelketten
 {
-    public List<List<EFarben>> generiereWimpelketten(Map<EFarben,Integer> farben, List<EFarben> kette, int kleinstMinAbst)
+    /**
+     * Generiert alle Wimpelketten mit einem Minimalen Abstand >= kleinstMinAbst
+     *
+     * @author Erik
+     * @param farben Die Verfügbaren Wimpelfarben
+     * @param kette Die Schon bestehende Wimpelkette
+     * @param kleinstMinAbst Der kleinste minimale Abstand einer generierten Wimpelkette
+     * @return Alle möglichen Wimpelketten mit minimalem Abstand >= kleinstMinAbst
+     */
+    public List<List<Farbe>> generiereWimpelketten(List<Farbe> farben, List<Farbe> kette, int kleinstMinAbst)
     {
-        List<List<EFarben>> ketten = new ArrayList<>();
+        List<List<Farbe>> ketten = new ArrayList<>();
 
         int wimpel = 0;
-        for (Integer anzahl : farben.values())
+        for (Farbe farbe : farben)
         {
-            wimpel += anzahl;
+            wimpel += farbe.GetAnzahl();
         }
 
         if(wimpel == 0)
@@ -22,16 +36,16 @@ public class Wimpelketten
             return ketten;
         }
 
-        for (Map.Entry<EFarben,Integer> farbe : farben.entrySet())
+        for (Farbe farbe : farben)
         {
-            if(farbe.getValue() <= 0)
+            if(farbe.GetAnzahl() <= 0)
             {
                 continue;
             }
 
-            List<EFarben> addKette = new ArrayList<>(kette);
+            List<Farbe> addKette = new ArrayList<>(kette);
 
-            addKette.add(farbe.getKey());
+            addKette.add(farbe);
 
             Kettenqualität kettenqualität = Kettenqualität.berechneQualität(addKette);
 
@@ -40,8 +54,10 @@ public class Wimpelketten
                 continue;
             }
 
-            Map<EFarben,Integer> subFarben = new HashMap<>(farben);
-            subFarben.replace(farbe.getKey(), farben.get(farbe.getKey()) - 1);
+            List<Farbe> subFarben = new ArrayList<>(farben);
+            int farbenIndex = subFarben.indexOf(farbe);
+            Farbe subFarbe = new Farbe(farbe.GetFullName(),farbe.GetShortName(),farbe.GetAnzahl() - 1);
+            subFarben.set(farbenIndex,subFarbe);
 
             ketten.addAll(generiereWimpelketten(subFarben,addKette, kleinstMinAbst));
         }
