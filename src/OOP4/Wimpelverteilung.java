@@ -62,7 +62,7 @@ public class Wimpelverteilung
         });
 
         List<List<Farbe>> maxKetten = new ArrayList<>();
-        int maxHäufigkeit = 0;
+        int maxHäufigkeit = anzahlWimpel;
 
         for (List<Farbe> kette : ketten)
         {
@@ -80,6 +80,7 @@ public class Wimpelverteilung
         }
         Kettenqualität maxqual = Kettenqualität.berechneQualität(maxKetten.get(0));
         EinAusgabe.textAusgabe("Die Maximale Qualität ist: (" + maxqual.getAbstand() + "|" + maxqual.getHäufigkeit() + ")");
+        EinAusgabe.textAusgabe("Die Anzahl der maximalen Wimpelketten ist:" + maxKetten.size());
         EinAusgabe.textAusgabe("Die Maximalen Wimpelketten sind:");
         for (List<Farbe> kette: maxKetten)
         {
