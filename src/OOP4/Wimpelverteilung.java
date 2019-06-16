@@ -68,10 +68,10 @@ public class Wimpelverteilung
         {
             Kettenqualität qual = Kettenqualität.berechneQualität(kette);
 
-            if(qual.getHäufigkeit() < maxHäufigkeit)
+            if(qual.getHäufigkeit() < maxHäufigkeit || maxHäufigkeit == 0)
             {
                     maxHäufigkeit = qual.getHäufigkeit();
-                    maxKetten =  new ArrayList<>();
+                    maxKetten.clear();
             }
             if(qual.getHäufigkeit() == maxHäufigkeit)
             {
@@ -83,13 +83,13 @@ public class Wimpelverteilung
         EinAusgabe.textAusgabe("Die Maximalen Wimpelketten sind:");
         for (List<Farbe> kette: maxKetten)
         {
-            String ketteString = "(";
+            StringBuilder ketteString = new StringBuilder("(");
             for (Farbe wimp : kette)
             {
-                ketteString += wimp.GetShortName() + ",";
+                ketteString.append(wimp.GetShortName()).append(",");
             }
-            ketteString += ")";
-            EinAusgabe.textAusgabe(ketteString);
+            ketteString.append(")");
+            EinAusgabe.textAusgabe(ketteString.toString());
         }
     }
 }
