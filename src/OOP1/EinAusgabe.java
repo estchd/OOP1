@@ -277,7 +277,7 @@ public class EinAusgabe {
         if(fullName.equals("")){
             return null;
         }
-        String shortName = einfacheAbfrage("Kurzer Name?");
+        String shortName = einfacheAbfrage("Abkürzung?");
         int anzahl = positiveIntAbfrage("Anzahl?");
         return new Farbe(fullName,shortName,anzahl);
     }

@@ -68,9 +68,10 @@ public class Wimpelverteilung
         {
             Kettenqualität qual = Kettenqualität.berechneQualität(kette);
 
-            if(qual.getHäufigkeit() > maxHäufigkeit)
+            if(qual.getHäufigkeit() < maxHäufigkeit)
             {
                     maxHäufigkeit = qual.getHäufigkeit();
+                    maxKetten =  new ArrayList<>();
             }
             if(qual.getHäufigkeit() == maxHäufigkeit)
             {
