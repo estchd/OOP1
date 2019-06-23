@@ -2,20 +2,33 @@ package OOP5;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class PythagorasBäume extends Application {
+
+    private Scene currentScene;
+    private Stage currentStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("Pythagoras Bäume");
+        currentStage = primaryStage;
+        currentStage.setTitle("Pythagoras Bäume");
 
-        InputPane inputPane = new InputPane();
-        Scene inputScene = new Scene(inputPane);
+        setScene(new InputScene(this));
 
-        primaryStage.setScene(inputScene);
-        primaryStage.show();
+        currentStage.show();
+    }
+
+    public void setScene(Scene scene){
+        currentScene = scene;
+        currentStage.setScene(currentScene);
+    }
+    public void draw(DrawArguments args)
+    {
+        setScene(new DrawScene(args));
     }
 }
