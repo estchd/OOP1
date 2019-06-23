@@ -9,7 +9,6 @@ import java.awt.*;
 
 public class PythagorasBäume extends Application {
 
-    private Scene currentScene;
     private Stage currentStage;
 
     @Override
@@ -24,11 +23,17 @@ public class PythagorasBäume extends Application {
     }
 
     public void setScene(Scene scene){
-        currentScene = scene;
-        currentStage.setScene(currentScene);
+        currentStage.hide();
+        currentStage.setScene(scene);
+        currentStage.show();
     }
     public void draw(DrawArguments args)
     {
-        setScene(new DrawScene(args));
+        setScene(new DrawScene(args, this));
+    }
+
+    public void exit()
+    {
+        this.currentStage.close();
     }
 }
