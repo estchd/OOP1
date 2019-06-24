@@ -169,6 +169,6 @@ public class InputPane extends GridPane {
         boolean isTreeOrderConsistent = treeOrderConsistent.isSelected();
         boolean isTreeColorSchemeBranch = treeColorSchemeBranch.isSelected();
 
-         parent.draw( new DrawArguments(side1,side2,minSize,isTreeOrderConsistent,isTreeColorSchemeBranch,color1.getValue(),color2.getValue(),color3.getValue()));
+         parent.drawTree( new DrawArguments(side1,side2,minSize,isTreeOrderConsistent,isTreeColorSchemeBranch,color1.getValue(),color2.getValue(),color3.getValue()));
     }
 }

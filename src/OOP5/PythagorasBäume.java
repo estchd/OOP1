@@ -45,18 +45,17 @@ public class PythagorasBäume extends Application {
     private double angle = 0.5F;
 
     /**
-     * Draws Pythagoras tree to the specified GraphicsContext.
-     *
-     * @param width - width of the container or canvas.
-     * @param height - height of the container or canvas.
+     * Draws Pythagoras tree to the specified GraphicsContext
      */
-    public void drawTree(DrawArguments args, int width, int height, double angle) {
-        setScene(new DrawScene(args, this));
+    public void drawTree(DrawArguments args) {
+        DrawScene drawi = new DrawScene(args, this);
+        //drawi.hei
+        setScene(drawi);
+
         //compute center of canvas
-        //int middleX = (int) (drawCanvas.getWidth() / 2 );
-        //int startY = 0;
-        this.angle = angle;
-        draw(drawCanvas.getGraphicsContext2D(), (width/2)-50, height, ((width/2)-50)+100, height, args);
+        int x = (int) (drawCanvas.getWidth() / 2 );
+        int startY = (int) (drawCanvas.getHeight() / 2 );
+        draw(drawCanvas.getGraphicsContext2D(), x - (int) (args.getSide1() / 2), startY + (int) (args.getSide2()/2), x + (int) (args.getSide1()/2), startY - (int) (args.getSide2()/2), args);
     }
 
     /**
@@ -71,14 +70,14 @@ public class PythagorasBäume extends Application {
      * @param y2 - End y value.
      * @param branch - The current branch that is being generated.
      */
-    private void genTree(GraphicsContext gc, double x1, double y1, double x2, double y2, int branch) {
-    }
+   // private void genTree(GraphicsContext gc, double x1, double y1, double x2, double y2, int branch) {
+  //  }
     public int branch;
-    public void draw(GraphicsContext gc, double x1, double y1, double x2, double y2, DrawArguments args)
+    private void draw(GraphicsContext gc, double x1, double y1, double x2, double y2, DrawArguments args)
     {
         gc.setStroke(Color.BLACK);
 
-
+        //nicht nur quadr sondern rect
         double dx = x2 - x1;
         double dy = y1 - y2;
         double x3 = x2 - dy;
@@ -96,9 +95,11 @@ public class PythagorasBäume extends Application {
 
         //Hilfe zu canvas https://docs.oracle.com/javase/8/javafx/api/javafx/scene/canvas/GraphicsContext.html#rect-double-double-double-double-
         //Draw square
-        gc.setFill(javafx.scene.paint.Color.BLUE);
-
-        gc.strokeRect(x3, y3, args.getSide1(), args.getSide2());
+        gc.setFill(args.getColor1());
+        double[] xrec = {x1, x2, x3, x4};
+        double[] yrec = {y1, y2, y3, y4};
+        gc.strokePolygon(xrec, yrec, 4);
+        gc.fill();
         //vermutlich mehr gc.strokeRect(double x,
         //                       double y, - upper left corner
         //                       double w, - width

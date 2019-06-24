@@ -24,7 +24,6 @@ public class DrawPane extends GridPane
     public DrawPane(DrawArguments args, PythagorasBäume parent)
     {
         this.parent = parent;
-        parent.setDrawCanvas(drawCanvas);
 
         MenuBar drawMenu = new MenuBar();
         Menu fileMenu = new Menu("File");
@@ -40,8 +39,11 @@ public class DrawPane extends GridPane
         getChildren().add(drawMenu);
         setAlignment(Pos.CENTER);
         drawCanvas = new DrawCanvas(args);
-        add(drawCanvas,0,0);
+        drawCanvas.setHeight(640);
+        drawCanvas.setWidth(640);
+        add(drawCanvas,0,1);
 
+        parent.setDrawCanvas(drawCanvas);
     }
 
     private void OnExit(ActionEvent e){
