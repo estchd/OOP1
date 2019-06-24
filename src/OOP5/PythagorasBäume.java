@@ -53,9 +53,36 @@ public class PythagorasBäume extends Application {
         setScene(drawi);
 
         //compute center of canvas
-        int x = (int) (drawCanvas.getWidth() / 2 );
-        int startY = (int) (drawCanvas.getHeight() / 2 );
-        draw(drawCanvas.getGraphicsContext2D(), x - (int) (args.getSide1() / 2), startY + (int) (args.getSide2()/2), x + (int) (args.getSide1()/2), startY - (int) (args.getSide2()/2), args);
+        double x =  (drawCanvas.getWidth() / 2 );
+        double startY =  (drawCanvas.getHeight() / 2 );
+        double x1 = x - (double) (args.getSide1() / 2);
+        double y1 = startY + (double) (args.getSide1()/2);
+        double x2 = x + (double) (args.getSide1()/2);
+        double y2 = startY - (double) (args.getSide1()/2);
+
+        //erstes rect + tria zeichnen
+        //rect
+       GraphicsContext gc = drawCanvas.getGraphicsContext2D();
+       /* double[] xs = {x1, x2, x2, x1};
+        double[] ys = {y1, y1, y2, y2};
+        gc.strokePolygon(xs, ys, 4); */
+
+        //triangle
+        //side 2 einbringen
+        //int triEcke =
+      /*  double[] trix = {x1, x2};
+          double[] triy = {y1, y1}; */
+
+        Color col;
+        //TODO
+        if (args.isTreeColorSchemeBranch()) {
+            col = args.getColor3();
+        } else {
+            col = Color.WHITE;
+        }
+        // Color col;
+        //draw(gc, xtri1, ytri1, xtri2, ytri2, args , col , 0);
+        draw(gc, x1, y1, x2, y2, args, col, 0);
     }
 
     /**
@@ -72,30 +99,47 @@ public class PythagorasBäume extends Application {
      */
    // private void genTree(GraphicsContext gc, double x1, double y1, double x2, double y2, int branch) {
   //  }
-    public int branch;
-    private void draw(GraphicsContext gc, double x1, double y1, double x2, double y2, DrawArguments args)
+    private void draw(GraphicsContext gc, double x1, double y1, double x2, double y2, DrawArguments args, Color color, int branch)
     {
         gc.setStroke(Color.BLACK);
 
-        //nicht nur quadr sondern rect
+        if (args.getSide1() < args.getMinSize() || args.getSide2() < args.getMinSize()) {
+            return;
+        }
+        //rect
         double dx = x2 - x1;
         double dy = y1 - y2;
         double x3 = x2 - dy;
         double y3 = y2 - dx;
         double x4 = x1 - dy;
         double y4 = y1 - dx;
-        double x5 = x4 + angle * (dx - dy);
-        double y5 = y4 - angle * (dx + dy);
+
+        double x5;
+        double y5;
+        //
+        if (false /*args.isTreeOrderConsistent() == symmetrisch */ ) {
+            x5 = x4 + angle * (dx - dy);
+            y5 = y4 - angle * (dx + dy);
+        } else {
+            if ( /*args.isTreeOrderConsistent()*/ true) {
+                //oder mit angle
+                double c = dx; //hypotenuse
+                double a = dx - 1; //lange seite, links
+                double b = Math.sqrt( a*a + c*c);
+                 x5 = ( a / c) * a + x1;
+                 y5 = Math.sin(Math.acos( a / c) )* a + y1;
+            }
+        }
 
 
-        //squareKleiner
+        //TODO löschen
         if(branch > 3 /*< args.getMinSize()*/) {
             return;
         }
 
         //Hilfe zu canvas https://docs.oracle.com/javase/8/javafx/api/javafx/scene/canvas/GraphicsContext.html#rect-double-double-double-double-
         //Draw square
-        gc.setFill(args.getColor1());
+        gc.setFill(color);
         double[] xrec = {x1, x2, x3, x4};
         double[] yrec = {y1, y2, y3, y4};
         gc.strokePolygon(xrec, yrec, 4);
@@ -114,13 +158,29 @@ public class PythagorasBäume extends Application {
         double[] xs = {x3, x4, x5};
         double[] ys = {y3, y4, y5};
         gc.strokePolygon(xs, ys, 3);
+        gc.fill();
         //gc.strokePolygon(double[] x, double[] y, int nPoints); - Points mit Koordinaten als Array, number of Points
        /* gc.strokeLine(x4, y4, x5, y5);
         gc.strokeLine(x5, y5, x3, y3); */
+        Color col1;
+        Color col2;
+        if (args.isTreeColorSchemeBranch()) {
+            col1 = args.getColor1();
+            col2 = args.getColor2();
+        } else {
+            if (branch < 5) {
+                col1 = args.getColor1();
+            } else if (branch >= 5 && branch <10){
+                col1 = args.getColor2();
+            } else {
+                col1 = args.getColor3();
+            }
+            col2 = col1;
+        }
 
         branch++;
-        draw(gc, x4, y4, x5, y5, args);
-        draw(gc, x5, y5, x3, y3, args);
+        draw(gc, x4, y4, x5, y5, args, col1, branch + 1);
+        draw(gc, x5, y5, x3, y3, args, col2, branch + 1);
 
     }
 

@@ -160,9 +160,9 @@ public class InputPane extends GridPane {
             errorLabel.setText("Side 2 must be greater than 0");
             return;
         }
-        if(minSize <= 0)
+        if(minSize <= 1)
         {
-            errorLabel.setText("Min Size must be greater than 0");
+            errorLabel.setText("Min Size must be greater than 1");
             return;
         }
 

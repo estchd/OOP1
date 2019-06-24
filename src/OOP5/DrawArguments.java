@@ -33,7 +33,11 @@ public class DrawArguments {
     }
 
     public void setMinSize(int minSize) {
-        this.minSize = minSize;
+        if (minSize > 1) {
+            this.minSize = minSize;
+        } else {
+            this.minSize = 1;
+        }
     }
 
     public boolean isTreeOrderConsistent() {
@@ -81,7 +85,7 @@ public class DrawArguments {
     public DrawArguments(int side1, int side2, int minSize, boolean isTreeOrderConsistent, boolean isTreeColorSchemeBranch, Color color1, Color color2, Color color3){
             this.side1 = side1;
             this.side2 = side2;
-            this.minSize = minSize;
+            setMinSize(minSize);
             this.isTreeOrderConsistent = isTreeOrderConsistent;
             this.isTreeColorSchemeBranch = isTreeColorSchemeBranch;
             this.color1 = color1;
