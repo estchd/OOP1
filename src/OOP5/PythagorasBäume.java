@@ -10,18 +10,31 @@ public class PythagorasBäume extends Application {
 
     private Stage currentStage;
 
+    /**
+     * Getter.
+     * @return DrawCanvas that is currently used
+     */
     public DrawCanvas getDrawCanvas() {
         return drawCanvas;
     }
 
+    /**
+     * Setter.
+     * @param drawCanvas - DrawCanvas to set.
+     */
     public void setDrawCanvas(DrawCanvas drawCanvas) {
         this.drawCanvas = drawCanvas;
     }
 
     private DrawCanvas drawCanvas;
 
+    /**
+     * Start and launch application.
+     *
+     * @param primaryStage - Stage used.
+     */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
         currentStage = primaryStage;
         currentStage.setTitle("Pythagoras Bäume");
@@ -37,12 +50,12 @@ public class PythagorasBäume extends Application {
         currentStage.show();
     }
 
-    //PythTree aus anderem Git
-
-    private double angle = 0.5F;
 
     /**
-     * Draws Pythagoras tree to the specified GraphicsContext
+     * Prepares the initial Vectors and colors, and calls the method for drawing the tree.
+     *
+     * @author Josi
+     * @param args - DrawArguments used to identify color, length and drawing schemes.
      */
     public void drawTree(DrawArguments args) {
         DrawScene drawi = new DrawScene(args, this);
@@ -51,8 +64,6 @@ public class PythagorasBäume extends Application {
         double s1 = args.getSide1();
         double s2 = args.getSide2();
         double sideLength = Math.sqrt( Math.pow(s1, 2) + Math.pow(s2, 2));
-
-        //seite 1 nur wenn größte seite
 
         //compute center of canvas
         double x =  (drawCanvas.getWidth() / 2 );
@@ -67,44 +78,40 @@ public class PythagorasBäume extends Application {
         Vector2 p1 = new Vector2(x1,startY + sideLength);
         Vector2 p2 = new Vector2(x2, startY + sideLength);
 
-        //angle = Math.atan(s1/s2);
-        angle = Math.atan(s2/s1);
 
        GraphicsContext gc = drawCanvas.getGraphicsContext2D();
-       /* double[] xs = {x1, x2, x2, x1};
-        double[] ys = {y1, y1, y2, y2};
-        gc.strokePolygon(xs, ys, 4); */
-
-        //triangle
-        //side 2 einbringen
-        //int triEcke =
-      /*  double[] trix = {x1, x2};
-          double[] triy = {y1, y1}; */
 
         Color col;
-        //TODO
+        //Färbung
         if (args.isTreeColorSchemeBranch()) {
+            //Wurzelfarbe
             col = args.getColor3();
         } else {
-            col = Color.WHITE;
+            //Asttiefe = 1
+           col = args.getColor1();
         }
-        // Color col;
-        //draw(gc, xtri1, ytri1, xtri2, ytri2, args , col , 0);
-        draw(gc, p1, p2, args, col, 0);
+
+        draw(gc, p1, p2, args, col, 1);
     }
 
     /**
      * Recursive method to generate the Pythagorean tree.
-     * This method draws a rectangle using the specified x and y values.
-     * Then continues by recursively call itself two times to create two new rectangles.
+     * This method draws a rectangle using the specified x and y values and creates a
+     * triangle with the specified parameters in the DrawArguments, as well as colors
+     * the rectangle (and triangle) in the specified color.
+     * Then continues by recursively call itself two times to create two new rectangles
+     * and triangles.
+     *
+     * @author Josi
      *
      * @param gc - GraphicsContext to use to draw with.
-     * @param p1 - Start Point 1
-     * @param p2 - Start Point 2.
+     * @param p1 - Start Point 1 as Vector2.
+     * @param p2 - Start Point 2 as Vector2.
+     * @param args - DrawArguments to draw with the specified colors and schemes, as
+     *             well as get side lengths and ratios.
+     * @param color - Color used to fill created rectangle (and triangle) with.
      * @param branch - The current branch that is being generated.
      */
-   // private void genTree(GraphicsContext gc, double x1, double y1, double x2, double y2, int branch) {
-  //  }
     private void draw(GraphicsContext gc, Vector2 p1, Vector2 p2, DrawArguments args, Color color, int branch)
     {
         gc.setStroke(Color.BLACK);
@@ -123,8 +130,17 @@ public class PythagorasBäume extends Application {
 
         double lengthRatio = currentLength / originalLength;
 
-        double side1Length = args.getSide1() * lengthRatio;
-        double side2Length = args.getSide2() * lengthRatio;
+        double side1Length;
+        double side2Length;
+
+        //ab hier nun wechsel einbauen
+        if(!args.isTreeOrderConsistent() && (branch % 2 == 0)){
+            side2Length = args.getSide1() * lengthRatio;
+            side1Length = args.getSide2() * lengthRatio;
+        } else {
+            side1Length = args.getSide1() * lengthRatio;
+            side2Length = args.getSide2() * lengthRatio;
+        }
         double triTopX = (Math.pow(side1Length , 2) + Math.pow(directionVector.length() , 2) - Math.pow(side2Length , 2)) / (2 * directionVector.length());
 
         double triTopY = Math.sqrt(Math.pow(side1Length , 2) - Math.pow(triTopX , 2));
@@ -142,6 +158,12 @@ public class PythagorasBäume extends Application {
         StrokeLine(gc,p2,rectUpRight);
         StrokeLine(gc,rectUpLeft,rectUpRight);
 
+        //fill rect
+        gc.setFill(color);
+        double[] xrec = {p1.x, rectUpLeft.x, rectUpRight.x, p2.x};
+        double[] yrec = {p1.y, rectUpLeft.y, rectUpRight.y, p2.y};
+        gc.fillPolygon(xrec, yrec, 4);
+
         if(directionVector.length() < args.getMinSize()){
             return;
         }
@@ -150,142 +172,62 @@ public class PythagorasBäume extends Application {
         StrokeLine(gc,rectUpLeft,triTop);
         StrokeLine(gc,rectUpRight,triTop);
 
+        //fill triangle
+        //gc.fillPolygon(new double[]{rectUpLeft.x, triTop.x, rectUpRight.x}, new double[]{rectUpLeft.y, triTop.y, rectUpRight.y}, 3);
+
         System.out.println("");
 
+        //Färbung
+        Color col1;
+        Color col2;
+        if (args.isTreeColorSchemeBranch()) {
+            if (side1Length < side2Length) {
+                col1 = args.getColor1();
+                col2 = args.getColor2();
+            } else {
+                col2 = args.getColor1();
+                col1 = args.getColor2();
+            }
+        } else {
+            if (branch < 5) {
+                col1 = args.getColor1();
+            } else if (branch <10){
+                col1 = args.getColor2();
+            } else {
+                col1 = args.getColor3();
+            }
+            col2 = col1;
+        }
+
         //Left Branch
-        draw(gc,rectUpLeft,triTop,args,color,0);
+        draw(gc,rectUpLeft,triTop,args,col1,branch + 1);
 
         //Right Branch
-        draw(gc,triTop,rectUpRight,args,color,1);
+        draw(gc,triTop,rectUpRight,args,col2,branch + 1);
 
-       /* if (true ) {
-            if(args.getSide2() > args.getSide1()) {
-                c = args.getSide2(); //(vemutlih problematish da eine seite bereits in quadrat )
-                //a =  Math.sqrt(args.getSide1()*args.getSide1() - c*c);
-                a = args.getSide1();
-            } else  {
-                c = args.getSide1();
-                a = args.getSide2();
-            }
-            angle = Math.acos(a / Math.sqrt( a * a + c * c)); //klein durc h groß da sin <1
-            //besser, hat aber noch nicht ganz hin, falsche zwei seiten, vermutlich
-        }*/
-        //if (false/*args.isTreeOrderConsistent() == symmetrisch */ ) {
-           /* x5 = x4 + angle * (dx - dy); //angle = Verhältnis seite zu hyp c
-            y5 = y4 - angle * (dx + dy);
-        } else {
-            if ( /*args.isTreeOrderConsistent()*//* true) {
-                //oder mit angle
-                double hyp = Math.sqrt(dx * dx + dy * dy);
-                a = hyp * Math.cos(angle);
-                //TODO überarbeitenb
-                x5 = x4 + Math.cos(angle) * a;
-                y5 = y4 - Math.sin(angle) * a;
 
-            }
-        }*/
         /** versuch hinweis zu verwenden ....
         double hyp = Math.sqrt(dx * dx + dy * dy);
         a = hyp * Math.cos(angle);
         x5 = Math.cos(angle) * a + x4;
         y5 = Math.sin(angle) * a - y4; */
 
-        /*double x51;
-        double y51;
-        double x52;
-        double y52;
-
-        double p = Math.tan( angle + Math.atan(dy/dx)); //tan(alpha + epsilon)
-        c = Math.sqrt( dx*dx + dy*dy); //hypotenuse des Dreiecks
-        x51 = -( p/2) - Math.sqrt( (p/2)*(p/2) - Math.cos(angle)*Math.cos(angle) * c); //erste Lösung der quadr. Gleichung
-        x52 = -( p/2) + Math.sqrt( (p/2)*(p/2) - Math.cos(angle)*Math.cos(angle) * c); //zweite Lösung der quadr. Gleichung
-
-        y51 = p*x51;
-        y52 = p*x52;
-
-        double x5_1 = x4 - x51;
-        double x5_2 = x4 - x52;
-        double y5_1 = y4 + y51;
-        double y5_2 = y4 + y52;*/
-
-        /*
-        Vector2 vc = new Vector2(x4, y4, x3, y3);
-        c = vc.length();
-        vc.drehen(angle);
-        a = ( c / Math.sin(Math.PI / 2)) * Math.sin(angle);
-        x5 = x4 - (vc.x / vc.length()) * a;
-        y5 = y4 + (vc.y / vc.length()) * a;
-
-        */
-        //TODO löschen
-
-        //if(branch > 3 /*< args.getMinSize()*/) {
-        //    return;
-        //}
-
-        //Hilfe zu canvas https://docs.oracle.com/javase/8/javafx/api/javafx/scene/canvas/GraphicsContext.html#rect-double-double-double-double-
-        //Draw square
-        /*
-        gc.setFill(color);
-        double[] xrec = {x1, x2, x3, x4};
-        double[] yrec = {y1, y2, y3, y4};
-        gc.strokePolygon(xrec, yrec, 4);
-        gc.fill();
-       */
-        //vermutlich mehr gc.strokeRect(double x,
-        //                       double y, - upper left corner
-        //                       double w, - width
-        //                       double h); - height
-        // und danach gc.fillRect(x, y, w h);
-       /* gc.strokeLine(x1, y1, x2, y2);
-        gc.strokeLine(x2, y2, x3, y3);
-        gc.strokeLine(x3, y3, x4, y4);
-        gc.strokeLine(x4, y4, x1, y1);*/
-
-        //Draw triangle
-        /*
-        double[] xs = {x3, x4, x5};
-        double[] ys = {y3, y4, y5};
-        gc.strokePolygon(xs, ys, 3);
-        gc.fill();
-        */
-        /*gc.setStroke(Color.BLUE);
-        double[] xs = {x3, x4, x5_1};
-        double[] ys = {y3, y4, y5_1};
-        gc.strokePolygon(xs, ys, 3);
-
-        gc.setStroke(Color.GREEN);
-        double[] xs1 = {x3, x4, x5_2};
-        double[] ys1 = {y3, y4, y5_2};
-        gc.strokePolygon(xs1, ys1, 3);*/
-
-        //gc.strokePolygon(double[] x, double[] y, int nPoints); - Points mit Koordinaten als Array, number of Points
-       /* gc.strokeLine(x4, y4, x5, y5);
-        gc.strokeLine(x5, y5, x3, y3); */
-        //Color col1 = args.getColor1();
-        //Color col2 = args.getColor2();
-      /*  if (args.isTreeColorSchemeBranch()) {
-            col1 = args.getColor1();
-            col2 = args.getColor2();
-        } else {
-            if (branch < 5) {
-                col1 = args.getColor1();
-            } else if (branch >= 5 && branch <10){
-                col1 = args.getColor2();
-            } else {
-                col1 = args.getColor3();
-            }
-            col2 = col1;
-        }*/
-
-       //draw(gc, x4, y4, x5, y5, args, col1, branch + 1);
-        //draw(gc, x5, y5, x3, y3, args, col2, branch + 1);
     }
 
+    /**
+     * Small Method to stroke line between two Vector2.
+     *
+     * @param gc - GraphicsContext to use to draw with.
+     * @param p1 - Start Point 1 as Vector2.
+     * @param p2 -  End Point 2 as Vector2.
+     */
     private void StrokeLine(GraphicsContext gc, Vector2 p1, Vector2 p2){
         gc.strokeLine(p1.x,p1.y,p2.x,p2.y);
     }
 
+    /**
+     * Close Applicatiom
+     */
     public void exit()
     {
         this.currentStage.close();
