@@ -19,8 +19,8 @@ public class Vector2
 
     /**
      * @author Erik
-     * @param x Vector X Koordinate
-     * @param y Vector Y Koordinate
+     * @param x Vector2 X Koordinate
+     * @param y Vector2 Y Koordinate
      */
     public Vector2(double x, double y)
     {
@@ -81,7 +81,7 @@ public class Vector2
     /**
      * @author Erik
      * Berechnet den Einheitsvector des Vectors (Vektor mit selber Richtung, aber Länge 1)
-     * @return Der Einheitsvector des Vector
+     * @return Der Einheitsvector des Vector2
      */
     public Vector2 getNormalized()
     {
@@ -93,7 +93,7 @@ public class Vector2
      * @author Erik
      * Prüft ein Anderes Object auf Gleichheit mit dem Vektor
      * @param other Das Object, welches verglichen werden soll
-     * @return Wahr, falls Vector und anderes Object gleich, sonst falsch
+     * @return Wahr, falls Vector2 und anderes Object gleich, sonst falsch
      */
     @Override
     public boolean equals(Object other)
@@ -129,8 +129,8 @@ public class Vector2
 
     /**
      * @author Erik
-     * Subtrahiert einen Vector
-     * @param other Der Vector, welcher abgezogen werden soll
+     * Subtrahiert einen Vector2
+     * @param other Der Vector2, welcher abgezogen werden soll
      * @return Das Ergebnis der Subtraktion
      */
     public Vector2 subVector2(Vector2 other)
@@ -140,8 +140,8 @@ public class Vector2
 
     /**
      * @author Erik
-     * Addiert einen Vector
-     * @param other Der Vector, welcher addiert werden soll
+     * Addiert einen Vector2
+     * @param other Der Vector2, welcher addiert werden soll
      * @return Das Ergebnis der Addition
      */
     public Vector2 addVector2(Vector2 other)
