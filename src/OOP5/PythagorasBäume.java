@@ -51,17 +51,24 @@ public class PythagorasBäume extends Application {
         DrawScene drawi = new DrawScene(args, this);
         //drawi.hei
         setScene(drawi);
+        double s1 = args.getSide1();
+        double s2 = args.getSide2();
+        double sidehyp = Math.sqrt( s1 * s1 + s2 * s2);
+
+        //seite 1 nur wenn größte seite
 
         //compute center of canvas
         double x =  (drawCanvas.getWidth() / 2 );
-        double startY =  (drawCanvas.getHeight() / 2 );
-        double x1 = x - (double) (args.getSide1() / 2);
-        double y1 = startY + (double) (args.getSide1()/2);
-        double x2 = x + (double) (args.getSide1()/2);
-        double y2 = startY - (double) (args.getSide1()/2);
+       // double startY =  (drawCanvas.getHeight() / 2 );
+        double startY =  drawCanvas.getHeight() - 5 ;
+        double x1 = x - ( sidehyp / 2);
+        double y1 = startY ;
+        double x2 = x + ( sidehyp /2);
+        double y2 = startY ;
 
-        //erstes rect + tria zeichnen
-        //rect
+        //angle = Math.atan(s1/s2);
+        angle = Math.atan(s2/s1);
+
        GraphicsContext gc = drawCanvas.getGraphicsContext2D();
        /* double[] xs = {x1, x2, x2, x1};
         double[] ys = {y1, y1, y2, y2};
@@ -116,24 +123,59 @@ public class PythagorasBäume extends Application {
 
         double x5;
         double y5;
+        double c;
+        double a;
         //
-        if (false /*args.isTreeOrderConsistent() == symmetrisch */ ) {
-            x5 = x4 + angle * (dx - dy);
+       /* if (true ) {
+            if(args.getSide2() > args.getSide1()) {
+                c = args.getSide2(); //(vemutlih problematish da eine seite bereits in quadrat )
+                //a =  Math.sqrt(args.getSide1()*args.getSide1() - c*c);
+                a = args.getSide1();
+            } else  {
+                c = args.getSide1();
+                a = args.getSide2();
+            }
+            angle = Math.acos(a / Math.sqrt( a * a + c * c)); //klein durc h groß da sin <1
+            //besser, hat aber noch nicht ganz hin, falsche zwei seiten, vermutlich
+        }*/
+        //if (false/*args.isTreeOrderConsistent() == symmetrisch */ ) {
+           /* x5 = x4 + angle * (dx - dy); //angle = Verhältnis seite zu hyp c
             y5 = y4 - angle * (dx + dy);
         } else {
-            if ( /*args.isTreeOrderConsistent()*/ true) {
+            if ( /*args.isTreeOrderConsistent()*//* true) {
                 //oder mit angle
-                double c = dx; //hypotenuse
-                double a = dx - 1; //lange seite, links
-                double b = Math.sqrt( a*a + c*c);
-                 x5 = ( a / c) * a + x1;
-                 y5 = Math.sin(Math.acos( a / c) )* a + y1;
+                double hyp = Math.sqrt(dx * dx + dy * dy);
+                a = hyp * Math.cos(angle);
+                //TODO überarbeitenb
+                x5 = x4 + Math.cos(angle) * a;
+                y5 = y4 - Math.sin(angle) * a;
+
             }
-        }
+        }*/
+        /** versuch hinweis zu verwenden ....
+        double hyp = Math.sqrt(dx * dx + dy * dy);
+        a = hyp * Math.cos(angle);
+        x5 = Math.cos(angle) * a + x4;
+        y5 = Math.sin(angle) * a - y4; */
+        double x51;
+        double y51;
+        double x52;
+        double y52;
 
+        double p = Math.tan( angle + Math.atan(dy/dx)); //tan(alpha + epsilon)
+        c = Math.sqrt( dx*dx + dy*dy); //hypotenuse des Dreiecks
+        x51 = -( p/2) - Math.sqrt( (p/2)*(p/2) - Math.cos(angle)*Math.cos(angle) * c); //erste Lösung der quadr. Gleichung
+        x52 = -( p/2) + Math.sqrt( (p/2)*(p/2) - Math.cos(angle)*Math.cos(angle) * c); //zweite Lösung der quadr. Gleichung
 
+        y51 = p*x51;
+        y52 = p*x52;
+
+        double x5_1 = x4 - x51;
+        double x5_2 = x4 - x52;
+        double y5_1 = y4 + y51;
+        double y5_2 = y4 + y52;
         //TODO löschen
-        if(branch > 3 /*< args.getMinSize()*/) {
+        if(branch > 6 /*< args.getMinSize()*/) {
             return;
         }
 
@@ -155,16 +197,26 @@ public class PythagorasBäume extends Application {
         gc.strokeLine(x4, y4, x1, y1);*/
 
         //Draw triangle
-        double[] xs = {x3, x4, x5};
+        /**double[] xs = {x3, x4, x5};
         double[] ys = {y3, y4, y5};
         gc.strokePolygon(xs, ys, 3);
-        gc.fill();
+        gc.fill();*/
+        gc.setStroke(Color.BLUE);
+        double[] xs = {x3, x4, x5_1};
+        double[] ys = {y3, y4, y5_1};
+        gc.strokePolygon(xs, ys, 3);
+
+        gc.setStroke(Color.GREEN);
+        double[] xs1 = {x3, x4, x5_2};
+        double[] ys1 = {y3, y4, y5_2};
+        gc.strokePolygon(xs1, ys1, 3);
+
         //gc.strokePolygon(double[] x, double[] y, int nPoints); - Points mit Koordinaten als Array, number of Points
        /* gc.strokeLine(x4, y4, x5, y5);
         gc.strokeLine(x5, y5, x3, y3); */
-        Color col1;
-        Color col2;
-        if (args.isTreeColorSchemeBranch()) {
+        Color col1 = args.getColor1();
+        Color col2 = args.getColor2();
+      /*  if (args.isTreeColorSchemeBranch()) {
             col1 = args.getColor1();
             col2 = args.getColor2();
         } else {
@@ -176,11 +228,12 @@ public class PythagorasBäume extends Application {
                 col1 = args.getColor3();
             }
             col2 = col1;
-        }
+        }*/
 
-        branch++;
-        draw(gc, x4, y4, x5, y5, args, col1, branch + 1);
-        draw(gc, x5, y5, x3, y3, args, col2, branch + 1);
+       draw(gc, x4, y4, x5_1, y5_1, args, col1, branch + 1);
+        draw(gc, x4, y4, x5_2, y5_2, args, col1, branch + 1);
+        draw(gc, x51, y5_1, x3, y3, args, col2, branch + 1);
+        draw(gc, x52, y5_2, x3, y3, args, col2, branch + 1);
 
     }
 
