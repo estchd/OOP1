@@ -157,7 +157,8 @@ public class PythagorasBäume extends Application {
         a = hyp * Math.cos(angle);
         x5 = Math.cos(angle) * a + x4;
         y5 = Math.sin(angle) * a - y4; */
-        double x51;
+
+        /*double x51;
         double y51;
         double x52;
         double y52;
@@ -173,9 +174,18 @@ public class PythagorasBäume extends Application {
         double x5_1 = x4 - x51;
         double x5_2 = x4 - x52;
         double y5_1 = y4 + y51;
-        double y5_2 = y4 + y52;
+        double y5_2 = y4 + y52;*/
+
+        Vector vc = new Vector(x4, y4, x3, y3);
+        c = vc.length();
+        vc.drehen(angle);
+        a = ( c / Math.sin(Math.PI / 2)) * Math.sin(angle);
+        x5 = x4 - (vc.a / vc.length()) * a;
+        y5 = y4 + (vc.b / vc.length()) * a;
+
+
         //TODO löschen
-        if(branch > 6 /*< args.getMinSize()*/) {
+        if(branch > 3 /*< args.getMinSize()*/) {
             return;
         }
 
@@ -197,11 +207,11 @@ public class PythagorasBäume extends Application {
         gc.strokeLine(x4, y4, x1, y1);*/
 
         //Draw triangle
-        /**double[] xs = {x3, x4, x5};
+        double[] xs = {x3, x4, x5};
         double[] ys = {y3, y4, y5};
         gc.strokePolygon(xs, ys, 3);
-        gc.fill();*/
-        gc.setStroke(Color.BLUE);
+        gc.fill();
+        /*gc.setStroke(Color.BLUE);
         double[] xs = {x3, x4, x5_1};
         double[] ys = {y3, y4, y5_1};
         gc.strokePolygon(xs, ys, 3);
@@ -209,7 +219,7 @@ public class PythagorasBäume extends Application {
         gc.setStroke(Color.GREEN);
         double[] xs1 = {x3, x4, x5_2};
         double[] ys1 = {y3, y4, y5_2};
-        gc.strokePolygon(xs1, ys1, 3);
+        gc.strokePolygon(xs1, ys1, 3);*/
 
         //gc.strokePolygon(double[] x, double[] y, int nPoints); - Points mit Koordinaten als Array, number of Points
        /* gc.strokeLine(x4, y4, x5, y5);
@@ -230,10 +240,8 @@ public class PythagorasBäume extends Application {
             col2 = col1;
         }*/
 
-       draw(gc, x4, y4, x5_1, y5_1, args, col1, branch + 1);
-        draw(gc, x4, y4, x5_2, y5_2, args, col1, branch + 1);
-        draw(gc, x51, y5_1, x3, y3, args, col2, branch + 1);
-        draw(gc, x52, y5_2, x3, y3, args, col2, branch + 1);
+       draw(gc, x4, y4, x5, y5, args, col1, branch + 1);
+        draw(gc, x5, y5, x3, y3, args, col2, branch + 1);
 
     }
 
