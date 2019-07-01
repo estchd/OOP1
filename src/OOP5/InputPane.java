@@ -14,6 +14,12 @@ import javafx.scene.text.TextAlignment;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 
+/**
+ * InputPane is used to as a user friendly way to get
+ * the arguments that are used to draw the tree.
+ *
+ * @author Erik
+ */
 public class InputPane extends GridPane {
 
     private NumberTextField side1TextField;
@@ -33,6 +39,12 @@ public class InputPane extends GridPane {
 
     private PythagorasBäume parent;
 
+    /**
+     * Contructor for InputPane, with all arguments already ready for input.
+     *
+     * @author Erik
+     * @param parent
+     */
     public InputPane(PythagorasBäume parent){
         super();
 
@@ -121,6 +133,15 @@ public class InputPane extends GridPane {
         add(drawButton,3,6,2,1);
     }
 
+    /**
+     * The Method which is called when the button "draw" is clicked.
+     * All of the entered arguments get checked if they are correct,
+     * otherwisely an error message is given. If everything is correct,
+     * it calls up the DrawingPane and calculate the tree.
+     *
+     * @author Erik
+     * @param event - ActionEvent invoked when button is clicked.
+     */
     private void drawbutton_onClick(ActionEvent event){
         int side1,side2,minSize;
         try

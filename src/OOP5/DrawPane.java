@@ -15,12 +15,26 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * DrawPane used for drawing and showing the PythagorasTree
+ * as well as having a Menu bar, used to exit the program or export the image.
+ *
+ * @author Josi and Erik
+ */
 public class DrawPane extends GridPane
 {
 
     private DrawCanvas drawCanvas;
     private PythagorasBäume parent;
 
+    /**
+     * Construktor used with DrawArguments and PythagorasBäume.
+     *
+     * @author Erik
+     * @param args - DrawArguments used as parameters for the
+     *             calculation of the Tree.
+     * @param parent - PythagorasBäume used as parent.
+     */
     public DrawPane(DrawArguments args, PythagorasBäume parent)
     {
         this.parent = parent;
@@ -52,9 +66,13 @@ public class DrawPane extends GridPane
 
 
     /***
-     * Event Handler für das Export MenüElement Action Event
-     * Logik für das Exportieren des Graphic Context zu jpg hier hinzufügen
-     * @param e
+     * The Event Handler for when "export" in the menu bar is selected.
+     * It will call open an FileChooser used to name and direct where the
+     * file should be saved as well as the extension (.png or .gif) and
+     * give out an error if saving the file wasn't possible.
+     *
+     * @author Josi
+     * @param e - ActionEvent used when "export" selected in menu.
      */
     private void OnExport(ActionEvent e){
             FileChooser fileChooser = new FileChooser();

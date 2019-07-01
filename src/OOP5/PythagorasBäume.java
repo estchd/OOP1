@@ -6,12 +6,18 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Class responsible for calulating and drawing the respective shapes that make the tree.
+ *
+ * @author Josi
+ */
 public class PythagorasBäume extends Application {
 
     private Stage currentStage;
 
     /**
      * Getter.
+     * @author Josi
      * @return DrawCanvas that is currently used
      */
     public DrawCanvas getDrawCanvas() {
@@ -20,6 +26,7 @@ public class PythagorasBäume extends Application {
 
     /**
      * Setter.
+     * @author Josi
      * @param drawCanvas - DrawCanvas to set.
      */
     public void setDrawCanvas(DrawCanvas drawCanvas) {
@@ -31,6 +38,7 @@ public class PythagorasBäume extends Application {
     /**
      * Start and launch application.
      *
+     * @author Josi
      * @param primaryStage - Stage used.
      */
     @Override
@@ -44,6 +52,11 @@ public class PythagorasBäume extends Application {
         currentStage.show();
     }
 
+    /**
+     * Setter for the scene object.
+     * @author Josi
+     * @param scene
+     */
     public void setScene(Scene scene){
         currentStage.hide();
         currentStage.setScene(scene);
@@ -217,6 +230,7 @@ public class PythagorasBäume extends Application {
     /**
      * Small Method to stroke line between two Vector2.
      *
+     * @author Josi
      * @param gc - GraphicsContext to use to draw with.
      * @param p1 - Start Point 1 as Vector2.
      * @param p2 -  End Point 2 as Vector2.
@@ -227,6 +241,7 @@ public class PythagorasBäume extends Application {
 
     /**
      * Close Applicatiom
+     * @author Josi
      */
     public void exit()
     {
