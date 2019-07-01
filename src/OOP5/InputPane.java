@@ -113,6 +113,9 @@ public class InputPane extends GridPane {
         errorLabel.setTextFill(Color.RED);
         add(errorLabel,0,6);
 
+        treeColorSchemeBranch.setOnAction(this::schemeBranchButton_OnFire);
+        treeColorSchemeDepth.setOnAction(this::schemeDepthButton_OnFire);
+
         Button drawButton = new Button("Draw");
         drawButton.setOnAction(this::drawbutton_onClick);
         add(drawButton,3,6,2,1);
@@ -170,5 +173,18 @@ public class InputPane extends GridPane {
         boolean isTreeColorSchemeBranch = treeColorSchemeBranch.isSelected();
 
         parent.drawTree( new DrawArguments(side1,side2,minSize,isTreeOrderConsistent,isTreeColorSchemeBranch,color1.getValue(),color2.getValue(),color3.getValue()));
+    }
+
+    private void schemeBranchButton_OnFire(ActionEvent event)
+    {
+        color1Label.setText("Left Color:");
+        color2Label.setText("Right Color:");
+        color3Label.setText("Base Color:");
+    }
+
+    private void schemeDepthButton_OnFire(ActionEvent event){
+        color1Label.setText("1-5 Color:");
+        color2Label.setText("6-10 Color:");
+        color3Label.setText("11+ Color:");
     }
 }
