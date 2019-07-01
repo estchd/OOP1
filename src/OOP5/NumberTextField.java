@@ -18,8 +18,9 @@ public class NumberTextField extends TextField
      *              This must be >=0 and < the end.
      * @param end - The ending index in the range, exclusive. This
      *            is one-past the last character to delete. This must
-     *            be > the start, and <= the length
-     * @param text
+     *            be > the start, and <= the length of the text.
+     * @param text - The text that is to replace the range.
+     *             This must not be null.
      */
     @Override
     public void replaceText(int start, int end, String text)
